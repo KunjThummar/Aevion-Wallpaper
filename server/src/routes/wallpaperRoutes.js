@@ -2,6 +2,7 @@ import express from 'express';
 import {
   getWallpapers,
   getWallpaperBySlug,
+  downloadWallpaper,
   incrementDownload,
   getSearchSuggestions,
   reportWallpaper
@@ -12,6 +13,7 @@ const router = express.Router();
 router.get('/', getWallpapers);
 router.get('/search-suggestions', getSearchSuggestions);
 router.get('/:slug', getWallpaperBySlug);
+router.get('/:id/download', downloadWallpaper);
 router.post('/:id/download', incrementDownload);
 router.post('/:id/report', reportWallpaper);
 

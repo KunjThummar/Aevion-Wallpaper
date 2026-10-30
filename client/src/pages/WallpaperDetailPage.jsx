@@ -33,6 +33,7 @@ export const WallpaperDetailPage = () => {
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
+  const [countdown, setCountdown] = useState(null);
   const [selectedResolution, setSelectedResolution] = useState('original');
   const [copied, setCopied] = useState(false);
 
@@ -88,37 +89,45 @@ export const WallpaperDetailPage = () => {
 
   const favorited = isFavorite(wallpaper.id);
 
-  const handleDownload = async () => {
-    if (downloading) return;
-    try {
-      setDownloading(true);
+  const handleDownload = () => {
+    if (downloading || countdown !== null) return;
 
-      confetti({
-        particleCount: 40,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+    setDownloading(true);
+    setCountdown(3);
 
-      // Increment download counter
-      await axios.post(`/api/wallpapers/${wallpaper.id}/download`);
-      setWallpaper(prev => ({ ...prev, downloadsCount: (prev.downloadsCount || 0) + 1 }));
+    let current = 3;
+    const timer = setInterval(() => {
+      current -= 1;
+      if (current > 0) {
+        setCountdown(current);
+      } else {
+        clearInterval(timer);
+        setCountdown(0);
 
-      const targetUrl = wallpaper.images?.originalUrl || wallpaper.images?.previewUrl;
-      const res = await fetch(targetUrl);
-      const blob = await res.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `aevion-${wallpaper.slug}-${selectedResolution}.${wallpaper.fileFormat || 'jpg'}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (e) {
-      window.open(wallpaper.images?.originalUrl || wallpaper.images?.previewUrl, '_blank');
-    } finally {
-      setDownloading(false);
-    }
+        try {
+          confetti({
+            particleCount: 50,
+            spread: 80,
+            origin: { y: 0.6 }
+          });
+        } catch (e) {}
+
+        // Trigger secure backend download stream
+        const downloadUrl = `/api/wallpapers/${wallpaper.id}/download?resolution=${selectedResolution}`;
+        
+        // Trigger browser native download attachment
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', '');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setWallpaper(prev => ({ ...prev, downloadsCount: (prev.downloadsCount || 0) + 1 }));
+        setDownloading(false);
+        setCountdown(null);
+      }
+    }, 1000);
   };
 
   const handleCopyLink = () => {
@@ -273,15 +282,30 @@ export const WallpaperDetailPage = () => {
               </select>
             </div>
 
-            {/* Big Action Download Button */}
-            <button
-              onClick={handleDownload}
-              disabled={downloading}
-              className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white font-bold text-sm shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 transition-all"
-            >
-              <Download className={`w-5 h-5 ${downloading ? 'animate-bounce' : ''}`} />
-              <span>{downloading ? 'Preparing Download...' : 'Free Download (Original Quality)'}</span>
-            </button>
+            {/* Big Action Download Button with Ad/Ready Countdown */}
+            <div className="space-y-2">
+              <button
+                onClick={handleDownload}
+                disabled={downloading}
+                className={`w-full py-4 rounded-2xl font-bold text-sm shadow-xl flex items-center justify-center gap-2 transition-all ${
+                  countdown !== null
+                    ? 'bg-amber-600 text-white cursor-wait animate-pulse'
+                    : 'bg-blue-600 hover:bg-blue-500 active:scale-[0.98] text-white shadow-blue-500/25'
+                }`}
+              >
+                <Download className={`w-5 h-5 ${downloading ? 'animate-bounce' : ''}`} />
+                <span>
+                  {countdown !== null
+                    ? `Generating 4K File in ${countdown}s...`
+                    : 'Free Download (Original Quality)'}
+                </span>
+              </button>
+              {countdown !== null && (
+                <p className="text-[11px] text-center text-slate-500 dark:text-slate-400">
+                  ✨ Verifying resolution & high-speed CDN stream...
+                </p>
+              )}
+            </div>
 
             {/* Quick Metrics */}
             <div className="grid grid-cols-2 gap-3 pt-2 text-center text-xs">

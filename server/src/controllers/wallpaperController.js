@@ -1,5 +1,14 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { getDB, saveDB } from '../services/storage.js';
 import { fetchLiveWallpapersOnDemand } from '../services/liveSearchFetcher.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// In-memory rate limiting to prevent scraper bots (max 15 downloads per minute per IP)
+const downloadRateLimitMap = new Map();
 
 // GET /api/wallpapers with rich filtering, search, sorting, and pagination
 export const getWallpapers = async (req, res) => {
@@ -153,6 +162,77 @@ export const getWallpaperBySlug = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error retrieving wallpaper' });
+  }
+};
+
+// GET /api/wallpapers/:id/download (Protected Streaming Gateway)
+export const downloadWallpaper = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { resolution = 'original' } = req.query;
+    const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+
+    // 1. Anti-bot Rate Limiter (Max 15 downloads per minute per IP)
+    const now = Date.now();
+    const clientHistory = downloadRateLimitMap.get(clientIp) || [];
+    const recentRequests = clientHistory.filter(time => now - time < 60000);
+
+    if (recentRequests.length >= 15) {
+      return res.status(429).json({
+        success: false,
+        message: 'Download rate limit reached (15 downloads/min). Please wait a moment.'
+      });
+    }
+    recentRequests.push(now);
+    downloadRateLimitMap.set(clientIp, recentRequests);
+
+    // 2. Find wallpaper
+    const db = getDB();
+    const wallpaper = (db.wallpapers || []).find(w => w.id === id || w.slug === id);
+
+    if (!wallpaper) {
+      return res.status(404).json({ success: false, message: 'Wallpaper not found' });
+    }
+
+    // 3. Increment download count and persist to MongoDB
+    wallpaper.downloadsCount = (wallpaper.downloadsCount || 0) + 1;
+    saveDB(db);
+
+    // 4. Determine file to stream
+    const targetUrl = wallpaper.images?.originalUrl || wallpaper.images?.previewUrl;
+    const cleanSlug = wallpaper.slug || 'wallpaper';
+    const ext = wallpaper.fileFormat || 'jpg';
+    const downloadFilename = `aevion-${cleanSlug}-${resolution}.${ext}`;
+
+    // If Cloudinary or External CDN URL (Fetch stream & dispatch with attachment headers)
+    if (targetUrl.startsWith('http://') || targetUrl.startsWith('https://')) {
+      const response = await fetch(targetUrl);
+      if (!response.ok) {
+        return res.redirect(targetUrl);
+      }
+      res.setHeader('Content-Disposition', `attachment; filename="${downloadFilename}"`);
+      res.setHeader('Content-Type', response.headers.get('content-type') || `image/${ext}`);
+      
+      const arrayBuffer = await response.arrayBuffer();
+      return res.send(Buffer.from(arrayBuffer));
+    }
+
+    // If local file on disk
+    const relativeClean = targetUrl.replace(/^\//, '');
+    const localFilePath = path.resolve(__dirname, '../../../', relativeClean);
+    if (fs.existsSync(localFilePath)) {
+      return res.download(localFilePath, downloadFilename);
+    }
+
+    const altLocal = path.resolve(__dirname, '../../', relativeClean);
+    if (fs.existsSync(altLocal)) {
+      return res.download(altLocal, downloadFilename);
+    }
+
+    return res.redirect(targetUrl);
+  } catch (err) {
+    console.error('[Download Gateway] Error:', err.message);
+    res.status(500).json({ success: false, message: 'Failed to process download stream' });
   }
 };
 
