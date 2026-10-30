@@ -41,20 +41,17 @@ if (isCloudinaryConfigured()) {
 /**
  * Uploads a memory Buffer to Cloudinary via upload_stream
  */
+
 const uploadBufferToCloudinary = (buffer, options) => {
   return new Promise((resolve, reject) => {
     // Re-verify configuration in case env vars were loaded dynamically
     if (isCloudinaryConfigured()) {
       cloudinary.config(getCloudinaryConfig());
     }
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET
-      });
-    }
 
     const stream = cloudinary.uploader.upload_stream(
       {
-        resource_type: 'image',
+        resource_type: "image",
         ...options
       },
       (error, result) => {
@@ -62,9 +59,11 @@ const uploadBufferToCloudinary = (buffer, options) => {
         resolve(result);
       }
     );
+
     stream.end(buffer);
   });
 };
+
 
 /**
  * Calculates a simple perceptual block hash for duplicate detection
