@@ -121,12 +121,7 @@ export const WallpaperDetailPage = () => {
 
         // Trigger secure backend download stream
         const downloadUrl = `/api/wallpapers/${wallpaper.id}/download?resolution=${selectedResolution}`;
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.setAttribute('download', '');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        window.location.assign(downloadUrl);
 
         setWallpaper(prev => ({ ...prev, downloadsCount: (prev.downloadsCount || 0) + 1 }));
       }
@@ -456,9 +451,18 @@ export const WallpaperDetailPage = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-center gap-2 py-3 text-emerald-500 font-bold text-sm bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-                <Check className="w-5 h-5" />
-                <span>File delivered to your device!</span>
+              <div className="space-y-3 py-1">
+                <div className="flex items-center justify-center gap-2 py-2 text-emerald-500 font-bold text-xs bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
+                  <Check className="w-4 h-4" />
+                  <span>Download triggered automatically!</span>
+                </div>
+                <a
+                  href={`/api/wallpapers/${wallpaper.id}/download?resolution=${selectedResolution}`}
+                  className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-500/25 transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Click here if download didn't start</span>
+                </a>
               </div>
             )}
 

@@ -12,7 +12,7 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
 
   const favorited = isFavorite(wallpaper.id);
 
-  const handleDownload = async (e, size = 'original') => {
+  const handleDownload = (e, size = 'original') => {
     e.preventDefault();
     e.stopPropagation();
     if (downloading) return;
@@ -21,29 +21,21 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
       setDownloading(true);
       setShowResMenu(false);
 
-      confetti({
-        particleCount: 25,
-        spread: 60,
-        origin: { y: 0.8 }
-      });
+      try {
+        confetti({
+          particleCount: 25,
+          spread: 60,
+          origin: { y: 0.8 }
+        });
+      } catch (err) {}
 
-      await axios.post(`/api/wallpapers/${wallpaper.id}/download`);
-
-      const targetUrl = wallpaper.images?.originalUrl || wallpaper.images?.previewUrl;
-      const res = await fetch(targetUrl);
-      const blob = await res.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `aevion-${wallpaper.slug}-${size}.${wallpaper.fileFormat || 'jpg'}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
+      // Direct call to protected backend download gateway
+      const downloadUrl = `/api/wallpapers/${wallpaper.id}/download?resolution=${size}`;
+      window.location.assign(downloadUrl);
     } catch {
       window.open(wallpaper.images?.originalUrl || wallpaper.images?.previewUrl, '_blank');
     } finally {
-      setDownloading(false);
+      setTimeout(() => setDownloading(false), 1500);
     }
   };
 

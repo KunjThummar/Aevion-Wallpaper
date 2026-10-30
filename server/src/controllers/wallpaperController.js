@@ -204,7 +204,14 @@ export const downloadWallpaper = async (req, res) => {
     const ext = wallpaper.fileFormat || 'jpg';
     const downloadFilename = `aevion-${cleanSlug}-${resolution}.${ext}`;
 
-    // If Cloudinary or External CDN URL (Fetch stream & dispatch with attachment headers)
+    // If Cloudinary URL, use Cloudinary's native ultra-fast fl_attachment CDN redirect
+    if (targetUrl.includes('res.cloudinary.com')) {
+      const cleanFilename = downloadFilename.replace(/\.[^/.]+$/, '');
+      const attachmentUrl = targetUrl.replace('/upload/', `/upload/fl_attachment:${cleanFilename}/`);
+      return res.redirect(attachmentUrl);
+    }
+
+    // If External CDN URL (Unsplash / Pexels / Wikimedia)
     if (targetUrl.startsWith('http://') || targetUrl.startsWith('https://')) {
       const response = await fetch(targetUrl);
       if (!response.ok) {

@@ -28,15 +28,22 @@ export const connectDB = async () => {
   const mongoURI = rawURI.trim();
 
   try {
-    const conn = await mongoose.connect(mongoURI, {
-      serverSelectionTimeoutMS: 10000, // 10s for DNS resolution and Atlas TLS handshake
+    const connectPromise = mongoose.connect(mongoURI, {
+      serverSelectionTimeoutMS: 4000,
+      connectTimeoutMS: 4000,
       dbName: 'aevion_wallpapers',
     });
+
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Connection timed out after 4000ms')), 4000)
+    );
+
+    const conn = await Promise.race([connectPromise, timeoutPromise]);
     isMongoConnected = true;
     console.log(`[Database] ✅ MongoDB Connected: ${conn.connection.host} (DB: aevion_wallpapers)`);
     return true;
   } catch (error) {
-    console.warn(`[Database] ⚠️ MongoDB Atlas connection failed (${error.message}). Falling back to Local JSON Storage mode.`);
+    console.warn(`[Database] ⚠️ MongoDB Atlas connection skipped (${error.message}). Running in High-Speed Local JSON Storage mode.`);
     isMongoConnected = false;
     return false;
   }
