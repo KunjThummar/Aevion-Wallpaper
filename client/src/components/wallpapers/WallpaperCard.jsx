@@ -6,13 +6,15 @@ import confetti from 'canvas-confetti';
 import axios from 'axios';
 
 export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
+  if (!wallpaper) return null;
+
   const { isFavorite, toggleFavorite } = useFavorites();
   const [isLoaded, setIsLoaded] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [selectedDownloadSize, setSelectedDownloadSize] = useState('original');
   const [showResMenu, setShowResMenu] = useState(false);
 
-  const favorited = isFavorite(wallpaper.id);
+  const favorited = isFavorite(wallpaper?.id);
 
   const handleDownload = (e, size = 'original') => {
     e.preventDefault();

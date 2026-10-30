@@ -17,17 +17,22 @@ export const FavoritesProvider = ({ children }) => {
   }, [favorites]);
 
   const toggleFavorite = (wallpaper) => {
+    if (!wallpaper) return;
+    const targetId = wallpaper.id || wallpaper;
     setFavorites(prev => {
-      const exists = prev.some(w => w.id === wallpaper.id);
+      const exists = prev.some(w => (w?.id || w) === targetId);
       if (exists) {
-        return prev.filter(w => w.id !== wallpaper.id);
+        return prev.filter(w => (w?.id || w) !== targetId);
       } else {
         return [...prev, wallpaper];
       }
     });
   };
 
-  const isFavorite = (id) => favorites.some(w => w.id === id);
+  const isFavorite = (id) => {
+    if (!id || !Array.isArray(favorites)) return false;
+    return favorites.some(w => (w?.id || w) === id);
+  };
 
   return (
     <FavoritesContext.Provider value={{ favorites, toggleFavorite, isFavorite }}>
