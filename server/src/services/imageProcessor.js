@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs';
@@ -6,6 +7,9 @@ import { v2 as cloudinary } from 'cloudinary';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config();
 
 const UPLOADS_DIR = path.resolve(__dirname, '../../uploads');
 const WALLPAPERS_DIR = path.join(UPLOADS_DIR, 'wallpapers');
@@ -17,21 +21,21 @@ const THUMBNAILS_DIR = path.join(UPLOADS_DIR, 'thumbnails');
   }
 });
 
+const getCloudinaryConfig = () => {
+  const cloud_name = (process.env.CLOUDINARY_CLOUD_NAME || '').trim().toLowerCase();
+  const api_key = (process.env.CLOUDINARY_API_KEY || '').trim();
+  const api_secret = (process.env.CLOUDINARY_API_SECRET || '').trim();
+  return { cloud_name, api_key, api_secret };
+};
+
 // Configure Cloudinary if credentials are present
 export const isCloudinaryConfigured = () => {
-  return !!(
-    process.env.CLOUDINARY_CLOUD_NAME &&
-    process.env.CLOUDINARY_API_KEY &&
-    process.env.CLOUDINARY_API_SECRET
-  );
+  const conf = getCloudinaryConfig();
+  return !!(conf.cloud_name && conf.api_key && conf.api_secret);
 };
 
 if (isCloudinaryConfigured()) {
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-  });
+  cloudinary.config(getCloudinaryConfig());
 }
 
 /**
@@ -41,8 +45,8 @@ const uploadBufferToCloudinary = (buffer, options) => {
   return new Promise((resolve, reject) => {
     // Re-verify configuration in case env vars were loaded dynamically
     if (isCloudinaryConfigured()) {
-      cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      cloudinary.config(getCloudinaryConfig());
+    }
         api_key: process.env.CLOUDINARY_API_KEY,
         api_secret: process.env.CLOUDINARY_API_SECRET
       });

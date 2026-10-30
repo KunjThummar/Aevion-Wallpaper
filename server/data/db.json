@@ -25,9 +25,9 @@
       "fileSizeBytes": 329844,
       "pHash": "0000000000001000000110000011110000111100001111100000100000011100",
       "images": {
-        "originalUrl": "/uploads/wallpapers/1793293600048-uyqn9m-original.jpeg",
-        "previewUrl": "/uploads/wallpapers/1793293600048-uyqn9m-preview.webp",
-        "thumbnailUrl": "/uploads/thumbnails/1793293600048-uyqn9m-thumb.webp"
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793375766/aevion_wallpapers/original/wall_1793375763816_ij3t-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793375768/aevion_wallpapers/previews/wall_1793375763816_ij3t-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793375770/aevion_wallpapers/thumbnails/wall_1793375763816_ij3t-thumb.webp"
       },
       "viewsCount": 0,
       "downloadsCount": 0,

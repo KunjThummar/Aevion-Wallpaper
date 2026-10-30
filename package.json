@@ -9,6 +9,7 @@
     "client": "npm run dev --prefix client",
     "build": "npm run build --prefix client",
     "seed": "node server/src/seed.js",
-    "import-wallpapers": "node server/src/autoFetchWallpapers.js"
+    "import-wallpapers": "node server/src/autoFetchWallpapers.js",
+    "sync-cloudinary": "node server/src/syncExistingToCloudinary.js"
   }
 }

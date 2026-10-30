@@ -18,10 +18,11 @@ import adminRoutes from './routes/adminRoutes.js';
 import adRoutes from './routes/adRoutes.js';
 import seoRoutes from './routes/seoRoutes.js';
 
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
