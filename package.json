@@ -1,0 +1,14 @@
+{
+  "name": "aevion-wallpaper-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aevion - Ultra HD & 4K Wallpaper Download Platform with Google AdSense Optimization",
+  "scripts": {
+    "start": "node server/src/server.js",
+    "server": "node server/src/server.js",
+    "client": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "seed": "node server/src/seed.js",
+    "import-wallpapers": "node server/src/autoFetchWallpapers.js"
+  }
+}
