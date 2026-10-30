@@ -15,12 +15,14 @@ import {
 } from 'lucide-react';
 import { useFavorites } from '../../context/FavoritesContext';
 import { AdSlot } from '../common/AdSlot';
+import { DownloadAdModal } from '../common/DownloadAdModal';
 import confetti from 'canvas-confetti';
 import axios from 'axios';
 
 export const WallpaperModal = ({ wallpaper, onClose, onSelectRelated }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
-  const [downloading, setDownloading] = useState(false);
+  const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+  const [selectedDownloadSize, setSelectedDownloadSize] = useState('original');
   const [showResMenu, setShowResMenu] = useState(false);
   const [copied, setCopied] = useState(false);
   const [related, setRelated] = useState([]);
@@ -47,36 +49,10 @@ export const WallpaperModal = ({ wallpaper, onClose, onSelectRelated }) => {
 
   if (!wallpaper) return null;
 
-  const handleDownload = async (size = 'original') => {
-    if (downloading) return;
-    try {
-      setDownloading(true);
-      setShowResMenu(false);
-
-      confetti({
-        particleCount: 35,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-
-      await axios.post(`/api/wallpapers/${wallpaper.id}/download`);
-
-      const targetUrl = wallpaper.images?.originalUrl || wallpaper.images?.previewUrl;
-      const res = await fetch(targetUrl);
-      const blob = await res.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `aevion-${wallpaper.slug}-${size}.${wallpaper.fileFormat || 'jpg'}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch {
-      window.open(wallpaper.images?.originalUrl || wallpaper.images?.previewUrl, '_blank');
-    } finally {
-      setDownloading(false);
-    }
+  const handleDownload = (size = 'original') => {
+    setSelectedDownloadSize(size);
+    setShowResMenu(false);
+    setDownloadModalOpen(true);
   };
 
   const handleShare = () => {
@@ -297,6 +273,14 @@ export const WallpaperModal = ({ wallpaper, onClose, onSelectRelated }) => {
           )}
         </div>
       </div>
+
+      {/* Google AdSense Countdown Interstitial Modal */}
+      <DownloadAdModal
+        isOpen={downloadModalOpen}
+        wallpaper={wallpaper}
+        resolution={selectedDownloadSize}
+        onClose={() => setDownloadModalOpen(false)}
+      />
     </div>
   );
 };

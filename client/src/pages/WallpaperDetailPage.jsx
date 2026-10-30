@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { useFavorites } from '../context/FavoritesContext';
 import { AdSlot } from '../components/common/AdSlot';
+import { DownloadAdModal } from '../components/common/DownloadAdModal';
 import { WallpaperCard } from '../components/wallpapers/WallpaperCard';
 import confetti from 'canvas-confetti';
 
@@ -93,39 +94,7 @@ export const WallpaperDetailPage = () => {
   const favorited = isFavorite(wallpaper.id);
 
   const handleDownload = () => {
-    if (downloading) return;
-
     setAdModalOpen(true);
-    setAdCountdown(4);
-    setDownloadReady(false);
-    setDownloading(true);
-
-    let current = 4;
-    const timer = setInterval(() => {
-      current -= 1;
-      if (current > 0) {
-        setAdCountdown(current);
-      } else {
-        clearInterval(timer);
-        setAdCountdown(0);
-        setDownloadReady(true);
-        setDownloading(false);
-
-        try {
-          confetti({
-            particleCount: 50,
-            spread: 80,
-            origin: { y: 0.6 }
-          });
-        } catch (e) {}
-
-        // Trigger secure backend download stream
-        const downloadUrl = `/api/wallpapers/${wallpaper.id}/download?resolution=${selectedResolution}`;
-        window.location.assign(downloadUrl);
-
-        setWallpaper(prev => ({ ...prev, downloadsCount: (prev.downloadsCount || 0) + 1 }));
-      }
-    }, 1000);
   };
 
   const handleCopyLink = () => {
@@ -408,84 +377,15 @@ export const WallpaperDetailPage = () => {
       )}
 
       {/* Google AdSense Countdown Interstitial Modal */}
-      {adModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-dark-card p-6 md:p-8 shadow-2xl border border-slate-200 dark:border-dark-border text-center space-y-5 animate-in fade-in zoom-in-95 duration-200">
-            {/* Close Button */}
-            <button
-              onClick={() => setAdModalOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-dark-surface transition"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Countdown Header */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50 mb-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Ultra HD 4K Generator</span>
-              </div>
-              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
-                {downloadReady ? '🎉 Your Download Has Started!' : 'Preparing Your Wallpaper...'}
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                {downloadReady
-                  ? 'Check your browser downloads folder. Thank you for supporting Aevion!'
-                  : 'Your high-speed CDN stream will start automatically after the countdown.'}
-              </p>
-            </div>
-
-            {/* Countdown Badge / Radial Indicator */}
-            {!downloadReady ? (
-              <div className="flex items-center justify-center gap-3 py-2">
-                <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-extrabold text-2xl shadow-lg shadow-blue-500/30 animate-pulse">
-                  {adCountdown}
-                </div>
-                <div className="text-left">
-                  <span className="block text-xs font-bold text-slate-800 dark:text-slate-200">
-                    Ready in {adCountdown} second{adCountdown === 1 ? '' : 's'}
-                  </span>
-                  <span className="text-[11px] text-slate-400">
-                    Direct original file download starting soon
-                  </span>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-3 py-1">
-                <div className="flex items-center justify-center gap-2 py-2 text-emerald-500 font-bold text-xs bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-                  <Check className="w-4 h-4" />
-                  <span>Download triggered automatically!</span>
-                </div>
-                <a
-                  href={`/api/wallpapers/${wallpaper.id}/download?resolution=${selectedResolution}`}
-                  className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-500/25 transition-all"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Click here if download didn't start</span>
-                </a>
-              </div>
-            )}
-
-            {/* Google AdSense Sponsored Unit */}
-            <div className="pt-1">
-              <AdSlot slotId="detail_page_sidebar" format="rectangle" />
-            </div>
-
-            {/* Modal Footer Actions */}
-            <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-dark-border text-xs">
-              <span className="text-slate-400 text-[11px]">
-                Sponsored by Google AdSense
-              </span>
-              <button
-                onClick={() => setAdModalOpen(false)}
-                className="px-5 py-2 rounded-xl font-semibold bg-slate-100 dark:bg-dark-surface hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition"
-              >
-                {downloadReady ? 'Done' : 'Cancel'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <DownloadAdModal
+        isOpen={adModalOpen}
+        wallpaper={wallpaper}
+        resolution={selectedResolution}
+        onClose={() => setAdModalOpen(false)}
+        onDownloadSuccess={() => {
+          setWallpaper(prev => ({ ...prev, downloadsCount: (prev.downloadsCount || 0) + 1 }));
+        }}
+      />
 
       {/* DMCA / Copyright Report Dialog */}
       {reportOpen && (

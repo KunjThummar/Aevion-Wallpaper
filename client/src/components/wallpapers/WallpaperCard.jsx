@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Heart, Download, Plus, ChevronDown, Check } from 'lucide-react';
 import { useFavorites } from '../../context/FavoritesContext';
+import { DownloadAdModal } from '../common/DownloadAdModal';
 import confetti from 'canvas-confetti';
 import axios from 'axios';
 
 export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [downloading, setDownloading] = useState(false);
+  const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+  const [selectedDownloadSize, setSelectedDownloadSize] = useState('original');
   const [showResMenu, setShowResMenu] = useState(false);
 
   const favorited = isFavorite(wallpaper.id);
@@ -15,28 +17,9 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
   const handleDownload = (e, size = 'original') => {
     e.preventDefault();
     e.stopPropagation();
-    if (downloading) return;
-
-    try {
-      setDownloading(true);
-      setShowResMenu(false);
-
-      try {
-        confetti({
-          particleCount: 25,
-          spread: 60,
-          origin: { y: 0.8 }
-        });
-      } catch (err) {}
-
-      // Direct call to protected backend download gateway
-      const downloadUrl = `/api/wallpapers/${wallpaper.id}/download?resolution=${size}`;
-      window.location.assign(downloadUrl);
-    } catch {
-      window.open(wallpaper.images?.originalUrl || wallpaper.images?.previewUrl, '_blank');
-    } finally {
-      setTimeout(() => setDownloading(false), 1500);
-    }
+    setSelectedDownloadSize(size);
+    setShowResMenu(false);
+    setDownloadModalOpen(true);
   };
 
   const isPortrait = wallpaper.orientation === 'portrait';
@@ -172,6 +155,14 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
           </div>
         </div>
       </div>
+
+      {/* Google AdSense Countdown Interstitial Modal */}
+      <DownloadAdModal
+        isOpen={downloadModalOpen}
+        wallpaper={wallpaper}
+        resolution={selectedDownloadSize}
+        onClose={() => setDownloadModalOpen(false)}
+      />
     </div>
   );
 };
