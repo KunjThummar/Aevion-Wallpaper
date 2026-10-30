@@ -11,10 +11,9 @@ build/
 
 # Environment Variables & Secrets
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.env
+*.env*
+.env.*
 server/.env
 
 # Local Uploads / Media Storage (Avoid committing large 4K binaries to Git)
