@@ -17,16 +17,27 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 export const connectDB = async () => {
-  const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/aevion_wallpapers';
+  const rawURI = process.env.MONGODB_URI;
   
+  if (!rawURI || rawURI.trim() === '') {
+    console.log('[Database] No MONGODB_URI configured. Running in High-Speed Local JSON Storage mode.');
+    isMongoConnected = false;
+    return false;
+  }
+
+  const mongoURI = rawURI.trim();
+
   try {
     const conn = await mongoose.connect(mongoURI, {
-      serverSelectionTimeoutMS: 2000, // Quick timeout to fallback if offline
+      serverSelectionTimeoutMS: 10000, // 10s for DNS resolution and Atlas TLS handshake
+      dbName: 'aevion_wallpapers',
     });
     isMongoConnected = true;
-    console.log(`[Database] MongoDB Connected: ${conn.connection.host}`);
+    console.log(`[Database] ✅ MongoDB Connected: ${conn.connection.host} (DB: aevion_wallpapers)`);
+    return true;
   } catch (error) {
-    console.warn(`[Database] MongoDB not reachable (${error.message}). Running in High-Speed Local JSON Storage mode.`);
+    console.warn(`[Database] ⚠️ MongoDB Atlas connection failed (${error.message}). Falling back to Local JSON Storage mode.`);
     isMongoConnected = false;
+    return false;
   }
 };

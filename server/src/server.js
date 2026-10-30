@@ -8,7 +8,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
-import { connectDB } from './config/db.js';
+import { connectDB, isMongoConnected } from './config/db.js';
+import { syncWithMongoDB } from './services/storage.js';
 import { seedDatabase } from './seed.js';
 
 import wallpaperRoutes from './routes/wallpaperRoutes.js';
@@ -58,6 +59,7 @@ app.get('/api/health', (req, res) => {
     status: 'online',
     appName: 'Aevion Wallpapers API',
     version: '1.0.0',
+    database: isMongoConnected ? 'MongoDB Atlas Connected' : 'Local JSON Storage Fallback',
     time: new Date().toISOString()
   });
 });
@@ -77,7 +79,10 @@ if (fs.existsSync(clientDistPath)) {
 
 // Start Server and Initialize Database
 const startServer = async () => {
-  await connectDB();
+  const connected = await connectDB();
+  if (connected) {
+    await syncWithMongoDB();
+  }
   seedDatabase();
 
   const server = app.listen(PORT, () => {
