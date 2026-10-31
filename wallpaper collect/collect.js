@@ -30,7 +30,7 @@ import { getDB, saveDB, WallpaperModel, CategoryModel } from '../server/src/serv
 import { CATEGORIES_CONFIG, getRandomPrompt } from './promptLibrary.js';
 import { checkDuplicate } from './duplicateChecker.js';
 import { uploadToCloudinaryHierarchy, checkCloudinaryAuth } from './cloudinaryUploader.js';
-import { generateAiImageBuffer, processVariants } from './generator.js';
+import { generateOrFetchImageBuffer, processVariants } from './generator.js';
 import { buildWallpaperRecord } from './metadataBuilder.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -227,14 +227,17 @@ async function runPipeline() {
       console.log(`📐 Resolution:  ${promptConfig.width}x${promptConfig.height} (${promptConfig.aspectRatio})`);
 
       try {
-        console.log(`🤖 Generating original AI artwork via FLUX.1 engine...`);
-        const rawBuffer = await generateAiImageBuffer(
-          promptConfig.prompt,
-          promptConfig.width,
-          promptConfig.height,
-          promptConfig.seed
-        );
-        console.log(`   └─ Image received (${(rawBuffer.length / (1024 * 1024)).toFixed(2)} MB)`);
+        console.log(`🤖 Generating artwork via AI / verified CC0 engine...`);
+        const { buffer: rawBuffer, isAi, source } = await generateOrFetchImageBuffer({
+          prompt: promptConfig.prompt,
+          width: promptConfig.width,
+          height: promptConfig.height,
+          seed: promptConfig.seed,
+          categorySlug: promptConfig.categorySlug,
+          allowFallback: true,
+          waitForAi: args.includes('--wait')
+        });
+        console.log(`   └─ Image received (${(rawBuffer.length / (1024 * 1024)).toFixed(2)} MB) [Source: ${source}]`);
 
         console.log(`🔍 Checking visual perceptual hash (pHash) against database...`);
         const dupCheck = await checkDuplicate(rawBuffer, db.wallpapers);
@@ -295,7 +298,9 @@ async function runPipeline() {
             previewUrl: uploadResult.previewUrl,
             thumbnailUrl: uploadResult.thumbnailUrl
           },
-          cloudinaryPublicId: uploadResult.publicId
+          cloudinaryPublicId: uploadResult.publicId,
+          source,
+          creatorName: isAi ? 'Aevion AI Studio' : 'Aevion Contributor / Public Domain'
         });
 
         db.wallpapers.unshift(wallpaperRecord);
