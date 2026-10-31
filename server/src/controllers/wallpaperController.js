@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { getDB, saveDB } from '../services/storage.js';
+import { getDB, saveDB, WallpaperModel } from '../services/storage.js';
+import { isMongoConnected } from '../config/db.js';
 import { fetchLiveWallpapersOnDemand } from '../services/liveSearchFetcher.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -24,8 +25,13 @@ export const getWallpapers = async (req, res) => {
       limit = 16
     } = req.query;
 
-    let db = getDB();
-    let results = [...(db.wallpapers || [])].filter(w => w.status === 'published');
+    let results;
+    if (isMongoConnected) {
+      results = await WallpaperModel.find({ status: 'published' }).sort({ createdAt: -1 }).lean();
+    } else {
+      let db = getDB();
+      results = [...(db.wallpapers || [])].filter(w => w.status === 'published');
+    }
 
     // 1. Search query with On-Demand Live Sourcing
     if (search && search.trim()) {
@@ -136,8 +142,19 @@ export const getWallpapers = async (req, res) => {
 export const getWallpaperBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
-    const db = getDB();
-    const wallpaper = db.wallpapers.find(w => w.slug === slug || w.id === slug);
+    let wallpaper;
+    let pool;
+
+    if (isMongoConnected) {
+      wallpaper = await WallpaperModel.findOne({
+        $or: [{ slug }, { id: slug }]
+      }).lean();
+      pool = await WallpaperModel.find({ status: 'published' }).limit(40).lean();
+    } else {
+      const db = getDB();
+      wallpaper = (db.wallpapers || []).find(w => w.slug === slug || w.id === slug);
+      pool = db.wallpapers || [];
+    }
 
     if (!wallpaper) {
       return res.status(404).json({ success: false, message: 'Wallpaper not found' });
@@ -145,10 +162,17 @@ export const getWallpaperBySlug = async (req, res) => {
 
     // Increment view count
     wallpaper.viewsCount = (wallpaper.viewsCount || 0) + 1;
-    saveDB(db);
+    if (isMongoConnected) {
+      WallpaperModel.updateOne({ id: wallpaper.id }, { $inc: { viewsCount: 1 } }).catch(() => {});
+    } else {
+      const db = getDB();
+      const localW = (db.wallpapers || []).find(w => w.id === wallpaper.id);
+      if (localW) localW.viewsCount = (localW.viewsCount || 0) + 1;
+      saveDB(db);
+    }
 
     // Get related wallpapers (same category or shared tags)
-    const related = db.wallpapers
+    const related = pool
       .filter(w => w.id !== wallpaper.id && w.status === 'published' && (
         w.categorySlug === wallpaper.categorySlug ||
         w.tags?.some(t => wallpaper.tags?.includes(t))

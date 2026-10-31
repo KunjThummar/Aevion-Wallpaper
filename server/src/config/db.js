@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dns from 'dns';
+
+// Ensure Node resolves MongoDB Atlas SRV records on Windows & varied ISP connections
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (e) {}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,13 +35,13 @@ export const connectDB = async () => {
 
   try {
     const connectPromise = mongoose.connect(mongoURI, {
-      serverSelectionTimeoutMS: 4000,
-      connectTimeoutMS: 4000,
+      serverSelectionTimeoutMS: 8000,
+      connectTimeoutMS: 8000,
       dbName: 'aevion_wallpapers',
     });
 
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Connection timed out after 4000ms')), 4000)
+      setTimeout(() => reject(new Error('Connection timed out after 8000ms')), 8000)
     );
 
     const conn = await Promise.race([connectPromise, timeoutPromise]);

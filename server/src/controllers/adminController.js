@@ -1,4 +1,5 @@
-import { getDB, saveDB } from '../services/storage.js';
+import { getDB, saveDB, WallpaperModel, CategoryModel, ConfigModel } from '../services/storage.js';
+import { isMongoConnected } from '../config/db.js';
 import { processWallpaperImage } from '../services/imageProcessor.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -25,14 +26,27 @@ export const adminLogin = async (req, res) => {
 // GET /api/admin/stats
 export const getAdminStats = async (req, res) => {
   try {
-    const db = getDB();
-    const wallpapers = db.wallpapers || [];
+    let wallpapers;
+    let categories;
+    let reports;
+
+    if (isMongoConnected) {
+      wallpapers = await WallpaperModel.find({}).lean();
+      categories = await CategoryModel.find({}).lean();
+      const config = await ConfigModel.findOne({ key: 'main_config' }).lean();
+      reports = config?.reports || [];
+    } else {
+      const db = getDB();
+      wallpapers = db.wallpapers || [];
+      categories = db.categories || [];
+      reports = db.reports || [];
+    }
     
     const totalDownloads = wallpapers.reduce((acc, w) => acc + (w.downloadsCount || 0), 0);
     const totalViews = wallpapers.reduce((acc, w) => acc + (w.viewsCount || 0), 0);
     const totalWallpapers = wallpapers.length;
-    const totalCategories = (db.categories || []).length;
-    const pendingReports = (db.reports || []).filter(r => r.status === 'pending').length;
+    const totalCategories = (categories || []).length;
+    const pendingReports = (reports || []).filter(r => r.status === 'pending').length;
 
     // Top downloaded
     const topDownloaded = [...wallpapers]
