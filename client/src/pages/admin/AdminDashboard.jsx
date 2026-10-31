@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Upload,
@@ -20,7 +20,11 @@ import {
 
 export const AdminDashboard = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('aevion_admin_token');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('aevion_admin_token') : null;
+
+  if (!token) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
   const [activeTab, setActiveTab] = useState('upload'); // 'upload' | 'wallpapers' | 'ads' | 'reports'
   const [stats, setStats] = useState(null);
@@ -43,48 +47,60 @@ export const AdminDashboard = () => {
   const [uploadSuccess, setUploadSuccess] = useState('');
   const [uploadError, setUploadError] = useState('');
 
-  // Axios config with admin token
-  const authConfig = {
-    headers: { Authorization: `Bearer ${token}` }
+  // Dynamic helper for Authorization headers
+  const getAuthHeaders = () => {
+    const t = localStorage.getItem('aevion_admin_token') || '';
+    return { Authorization: `Bearer ${t}` };
   };
 
   useEffect(() => {
-    if (!token) {
-      navigate('/admin/login');
-      return;
-    }
-
     const fetchAllData = async () => {
       setLoading(true);
       try {
-        const [statsRes, wallRes, catRes, adsRes, repRes] = await Promise.all([
-          axios.get('/api/admin/stats', authConfig),
+        const headers = getAuthHeaders();
+        const [statsRes, wallRes, catRes, adsRes, repRes] = await Promise.allSettled([
+          axios.get('/api/admin/stats', { headers }),
           axios.get('/api/wallpapers?limit=100'),
           axios.get('/api/categories'),
           axios.get('/api/ads'),
-          axios.get('/api/admin/reports', authConfig)
+          axios.get('/api/admin/reports', { headers })
         ]);
 
-        if (statsRes.data.success) setStats(statsRes.data.stats);
-        if (wallRes.data.success) setWallpapers(wallRes.data.data || []);
-        if (catRes.data.success) {
-          setCategories(catRes.data.data || []);
-          if (catRes.data.data.length > 0) setCategorySlug(catRes.data.data[0].slug);
-        }
-        if (adsRes.data.success) setAds(adsRes.data.data || []);
-        if (repRes.data.success) setReports(repRes.data.data || []);
-      } catch (err) {
-        if (err.response?.status === 401 || err.response?.status === 403) {
+        if (
+          (statsRes.status === 'rejected' && (statsRes.reason?.response?.status === 401 || statsRes.reason?.response?.status === 403)) ||
+          (repRes.status === 'rejected' && (repRes.reason?.response?.status === 401 || repRes.reason?.response?.status === 403))
+        ) {
           localStorage.removeItem('aevion_admin_token');
-          navigate('/admin/login');
+          navigate('/admin/login', { replace: true });
+          return;
         }
+
+        if (statsRes.status === 'fulfilled' && statsRes.value.data?.success) {
+          setStats(statsRes.value.data.stats || null);
+        }
+        if (wallRes.status === 'fulfilled' && wallRes.value.data?.success) {
+          setWallpapers(wallRes.value.data.data || []);
+        }
+        if (catRes.status === 'fulfilled' && catRes.value.data?.success) {
+          const cats = catRes.value.data.data || [];
+          setCategories(cats);
+          if (cats.length > 0) setCategorySlug(cats[0].slug);
+        }
+        if (adsRes.status === 'fulfilled' && adsRes.value.data?.success) {
+          setAds(adsRes.value.data.data || []);
+        }
+        if (repRes.status === 'fulfilled' && repRes.value.data?.success) {
+          setReports(repRes.value.data.data || []);
+        }
+      } catch (err) {
+        console.error('Error loading dashboard data:', err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchAllData();
-  }, [token, navigate]);
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('aevion_admin_token');
@@ -125,7 +141,7 @@ export const AdminDashboard = () => {
 
       const res = await axios.post('/api/admin/wallpapers', formData, {
         headers: {
-          ...authConfig.headers,
+          ...getAuthHeaders(),
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -150,8 +166,8 @@ export const AdminDashboard = () => {
   const handleDeleteWallpaper = async (id) => {
     if (!window.confirm('Are you sure you want to permanently delete this wallpaper?')) return;
     try {
-      await axios.delete(`/api/admin/wallpapers/${id}`, authConfig);
-      setWallpapers(prev => prev.filter(w => w.id !== id));
+      await axios.delete(`/api/admin/wallpapers/${id}`, { headers: getAuthHeaders() });
+      setWallpapers(prev => (prev || []).filter(w => w.id !== id));
     } catch {
       alert('Delete failed');
     }
@@ -159,9 +175,9 @@ export const AdminDashboard = () => {
 
   const handleToggleAdSlot = async (slotId, currentStatus) => {
     try {
-      const res = await axios.put(`/api/ads/${slotId}`, { isEnabled: !currentStatus }, authConfig);
+      const res = await axios.put(`/api/ads/${slotId}`, { isEnabled: !currentStatus }, { headers: getAuthHeaders() });
       if (res.data.success) {
-        setAds(prev => prev.map(a => a.slotId === slotId ? res.data.data : a));
+        setAds(prev => (prev || []).map(a => a.slotId === slotId ? res.data.data : a));
       }
     } catch {
       alert('Failed to update ad status');
@@ -170,7 +186,7 @@ export const AdminDashboard = () => {
 
   const handleSaveAdConfig = async (slotId, adClient, adSlot) => {
     try {
-      const res = await axios.put(`/api/ads/${slotId}`, { adClient, adSlot }, authConfig);
+      const res = await axios.put(`/api/ads/${slotId}`, { adClient, adSlot }, { headers: getAuthHeaders() });
       if (res.data.success) {
         alert('Ad placement updated successfully!');
       }
@@ -181,8 +197,8 @@ export const AdminDashboard = () => {
 
   const handleResolveReport = async (reportId) => {
     try {
-      await axios.put(`/api/admin/reports/${reportId}/resolve`, {}, authConfig);
-      setReports(prev => prev.map(r => r.id === reportId ? { ...r, status: 'resolved' } : r));
+      await axios.put(`/api/admin/reports/${reportId}/resolve`, {}, { headers: getAuthHeaders() });
+      setReports(prev => (prev || []).map(r => r.id === reportId ? { ...r, status: 'resolved' } : r));
     } catch {
       alert('Failed to resolve report');
     }
@@ -229,7 +245,7 @@ export const AdminDashboard = () => {
         <div className="p-5 rounded-2xl bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border shadow-sm">
           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Wallpapers</span>
           <p className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
-            {stats?.totalWallpapers || wallpapers.length}
+            {stats?.totalWallpapers || (wallpapers || []).length}
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border shadow-sm">
@@ -247,13 +263,13 @@ export const AdminDashboard = () => {
         <div className="p-5 rounded-2xl bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border shadow-sm">
           <span className="text-[11px] font-bold uppercase tracking-wider text-violet-500">Categories</span>
           <p className="text-2xl font-extrabold text-violet-600 dark:text-violet-400 mt-1">
-            {categories.length}
+            {(categories || []).length}
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border shadow-sm">
           <span className="text-[11px] font-bold uppercase tracking-wider text-rose-500">Pending DMCA</span>
           <p className="text-2xl font-extrabold text-rose-600 dark:text-rose-400 mt-1">
-            {reports.filter(r => r.status === 'pending').length}
+            {(reports || []).filter(r => r?.status === 'pending').length}
           </p>
         </div>
       </div>
@@ -281,7 +297,7 @@ export const AdminDashboard = () => {
           }`}
         >
           <Layers className="w-4 h-4" />
-          <span>Manage Wallpapers ({wallpapers.length})</span>
+          <span>Manage Wallpapers ({(wallpapers || []).length})</span>
         </button>
 
         <button
@@ -305,7 +321,7 @@ export const AdminDashboard = () => {
           }`}
         >
           <Flag className="w-4 h-4" />
-          <span>DMCA & Reports ({reports.length})</span>
+          <span>DMCA & Reports ({(reports || []).length})</span>
         </button>
       </div>
 
@@ -371,7 +387,7 @@ export const AdminDashboard = () => {
                     onChange={(e) => setCategorySlug(e.target.value)}
                     className="w-full p-3 rounded-xl bg-slate-100 dark:bg-dark-surface border border-slate-300 dark:border-dark-border font-semibold"
                   >
-                    {categories.map((c) => (
+                    {(categories || []).map((c) => (
                       <option key={c.slug} value={c.slug}>
                         {c.name}
                       </option>
@@ -473,7 +489,7 @@ export const AdminDashboard = () => {
         <div className="rounded-3xl bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border shadow-xl overflow-hidden">
           <div className="p-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
             <h3 className="font-bold text-base text-slate-900 dark:text-white">
-              Published Wallpapers Catalog ({wallpapers.length})
+              Published Wallpapers Catalog ({(wallpapers || []).length})
             </h3>
           </div>
 
@@ -490,7 +506,7 @@ export const AdminDashboard = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-                {wallpapers.map((w) => (
+                {(wallpapers || []).map((w) => (
                   <tr key={w.id} className="hover:bg-slate-50 dark:hover:bg-dark-surface/50 transition-colors">
                     <td className="py-3 px-4 flex items-center gap-3">
                       <img
@@ -556,7 +572,7 @@ export const AdminDashboard = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {ads.map((ad) => (
+            {(ads || []).map((ad) => (
               <div
                 key={ad.slotId}
                 className="p-6 rounded-3xl bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border shadow-lg space-y-4"
@@ -623,16 +639,16 @@ export const AdminDashboard = () => {
       {activeTab === 'reports' && (
         <div className="rounded-3xl bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border shadow-xl overflow-hidden p-6 space-y-4">
           <h3 className="font-bold text-base text-slate-900 dark:text-white">
-            DMCA & Copyright Takedown Reports ({reports.length})
+            DMCA & Copyright Takedown Reports ({(reports || []).length})
           </h3>
 
-          {reports.length === 0 ? (
+          {(reports || []).length === 0 ? (
             <div className="py-12 text-center text-xs text-slate-400">
               No copyright or inappropriate content reports submitted.
             </div>
           ) : (
             <div className="space-y-3">
-              {reports.map((rep) => (
+              {(reports || []).map((rep) => (
                 <div
                   key={rep.id}
                   className="p-4 rounded-2xl bg-slate-50 dark:bg-dark-surface border border-slate-200 dark:border-dark-border flex items-center justify-between text-xs"

@@ -4,14 +4,14 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || bcrypt.hashSync('aevion@admin2026', 10);
-const JWT_SECRET = process.env.JWT_SECRET || 'aevion_secret_key_production_2026';
+const getJwtSecret = () => (process.env.JWT_SECRET || 'aevion_secret_key_production_2026').trim();
 
 // POST /api/admin/login
 export const adminLogin = async (req, res) => {
   const { username, password } = req.body;
 
   if (username === 'admin' && (password === 'aevion@admin2026' || bcrypt.compareSync(password, ADMIN_PASSWORD_HASH))) {
-    const token = jwt.sign({ role: 'admin', username: 'admin' }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ role: 'admin', username: 'admin' }, getJwtSecret(), { expiresIn: '7d' });
     return res.json({
       success: true,
       token,

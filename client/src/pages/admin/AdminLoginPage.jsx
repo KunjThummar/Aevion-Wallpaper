@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { Shield, Lock, User, ArrowRight } from 'lucide-react';
 import { Logo } from '../../components/common/Logo';
 
 export const AdminLoginPage = () => {
   const navigate = useNavigate();
+  const token = typeof window !== 'undefined' ? localStorage.getItem('aevion_admin_token') : null;
+
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('aevion@admin2026');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  if (token) {
+    return <Navigate to="/admin/dashboard" replace />;
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
