@@ -215,22 +215,13 @@ export const syncWithMongoDB = async () => {
     const mongoWallpapers = await WallpaperModel.find({}).lean();
     const localData = getDB();
 
-    // Case 1: MongoDB is currently empty -> migrate all existing data to MongoDB Atlas
-    if (mongoWallpapers.length === 0) {
-      console.log(`[Storage] MongoDB Atlas is empty. Migrating ${localData.wallpapers.length} local wallpapers to MongoDB...`);
-      await persistToMongo(localData);
-      console.log('[Storage] ✅ Initial migration to MongoDB Atlas complete!');
-      return;
-    }
-
-    // Case 2: MongoDB already has wallpapers -> hydrate memoryCache and local backup
     console.log(`[Storage] Loaded ${mongoWallpapers.length} wallpapers from MongoDB Atlas.`);
     const mongoCategories = await CategoryModel.find({}).lean();
     const mongoConfig = await ConfigModel.findOne({ key: 'main_config' }).lean();
 
     const merged = {
       wallpapers: mongoWallpapers,
-      categories: mongoCategories.length > 0 ? mongoCategories : localData.categories,
+      categories: mongoCategories.length > 0 ? mongoCategories : (localData.categories || []),
       tags: mongoConfig?.tags || localData.tags || [],
       ads: mongoConfig?.ads || localData.ads || [],
       settings: mongoConfig?.settings || localData.settings || {},
