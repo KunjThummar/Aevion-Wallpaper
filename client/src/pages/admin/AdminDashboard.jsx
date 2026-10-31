@@ -23,7 +23,7 @@ export const AdminDashboard = () => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('aevion_admin_token') : null;
 
   if (!token) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/Aevion@1277/admin/login" replace />;
   }
 
   const [activeTab, setActiveTab] = useState('upload'); // 'upload' | 'wallpapers' | 'ads' | 'reports'
@@ -71,7 +71,7 @@ export const AdminDashboard = () => {
           (repRes.status === 'rejected' && (repRes.reason?.response?.status === 401 || repRes.reason?.response?.status === 403))
         ) {
           localStorage.removeItem('aevion_admin_token');
-          navigate('/admin/login', { replace: true });
+          navigate('/Aevion@1277/admin/login', { replace: true });
           return;
         }
 
@@ -104,7 +104,7 @@ export const AdminDashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('aevion_admin_token');
-    navigate('/admin/login');
+    navigate('/Aevion@1277/admin/login');
   };
 
   const handleFileChange = (e) => {

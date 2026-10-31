@@ -204,15 +204,6 @@ export const Navbar = ({ onOpenSubmitModal }) => {
           >
             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-
-          {/* Unsplash-Style "Submit a photo" Button */}
-          <Link
-            to="/admin"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-300 dark:border-white/20 text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white hover:border-slate-500 dark:hover:border-white text-xs font-semibold shadow-sm transition-all"
-          >
-            <Upload className="w-3.5 h-3.5" />
-            <span>Submit a photo</span>
-          </Link>
         </div>
       </div>
 

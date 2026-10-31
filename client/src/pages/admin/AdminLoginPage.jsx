@@ -14,7 +14,7 @@ export const AdminLoginPage = () => {
   const [loading, setLoading] = useState(false);
 
   if (token) {
-    return <Navigate to="/admin/dashboard" replace />;
+    return <Navigate to="/Aevion@1277/admin/dashboard" replace />;
   }
 
   const handleLogin = async (e) => {
@@ -26,7 +26,7 @@ export const AdminLoginPage = () => {
       const res = await axios.post('/api/admin/login', { username, password });
       if (res.data.success && res.data.token) {
         localStorage.setItem('aevion_admin_token', res.data.token);
-        navigate('/admin/dashboard');
+        navigate('/Aevion@1277/admin/dashboard');
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid username or password');

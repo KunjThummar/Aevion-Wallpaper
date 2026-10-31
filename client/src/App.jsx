@@ -33,10 +33,19 @@ export const App = () => {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/dmca" element={<DMCAPage />} />
 
-          {/* Admin Back-Office */}
-          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-          <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          {/* Secret Administrative Portal */}
+          <Route path="/Aevion@1277/admin" element={<Navigate to="/Aevion@1277/admin/dashboard" replace />} />
+          <Route path="/Aevion@1277/admin/login" element={<AdminLoginPage />} />
+          <Route path="/Aevion@1277/admin/dashboard" element={<AdminDashboard />} />
+
+          {/* Lowercase alias for user convenience */}
+          <Route path="/aevion@1277/admin" element={<Navigate to="/Aevion@1277/admin/dashboard" replace />} />
+          <Route path="/aevion@1277/admin/login" element={<Navigate to="/Aevion@1277/admin/login" replace />} />
+          <Route path="/aevion@1277/admin/dashboard" element={<Navigate to="/Aevion@1277/admin/dashboard" replace />} />
+
+          {/* Obscure old /admin routes for security */}
+          <Route path="/admin/*" element={<Navigate to="/" replace />} />
+          <Route path="/admin" element={<Navigate to="/" replace />} />
 
           {/* 404 Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
