@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 export const AdSlot = ({
   slotId = 'home_header_banner',
   format = 'horizontal', // 'horizontal' | 'rectangle' | 'fluid'
-  adClient = 'ca-pub-XXXXXXXXXXXXXXXX',
+  adClient = 'ca-pub-9992489128978003',
   adSlot = '1234567890',
   className = ''
 }) => {

@@ -95,4 +95,10 @@ Sitemap: ${baseUrl}/sitemap.xml
   res.send(robots);
 });
 
+// GET /ads.txt
+router.get('/ads.txt', (req, res) => {
+  res.header('Content-Type', 'text/plain');
+  res.send('google.com, pub-9992489128978003, DIRECT, f08c47fec0942fa0\n');
+});
+
 export default router;

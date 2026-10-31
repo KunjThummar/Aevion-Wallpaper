@@ -11,7 +11,7 @@ const DEFAULT_STATE = {
     {
       slotId: 'home_header_banner',
       name: 'Homepage Top Leaderboard',
-      adClient: 'ca-pub-XXXXXXXXXXXXXXXX',
+      adClient: 'ca-pub-9992489128978003',
       adSlot: '1234567890',
       adFormat: 'horizontal',
       isEnabled: true,
@@ -20,7 +20,7 @@ const DEFAULT_STATE = {
     {
       slotId: 'grid_feed_inline',
       name: 'Wallpaper Gallery In-Feed Native Ad',
-      adClient: 'ca-pub-XXXXXXXXXXXXXXXX',
+      adClient: 'ca-pub-9992489128978003',
       adSlot: '2345678901',
       adFormat: 'fluid',
       isEnabled: true,
@@ -29,7 +29,7 @@ const DEFAULT_STATE = {
     {
       slotId: 'detail_page_sidebar',
       name: 'Wallpaper Detail Page Ad (Below Specs)',
-      adClient: 'ca-pub-XXXXXXXXXXXXXXXX',
+      adClient: 'ca-pub-9992489128978003',
       adSlot: '3456789012',
       adFormat: 'rectangle',
       isEnabled: true,
@@ -42,7 +42,7 @@ const DEFAULT_STATE = {
     contactEmail: 'contact@aevionwallpapers.com',
     maintenanceMode: false,
     googleAnalyticsId: 'G-XXXXXXXXXX',
-    adSensePublisherId: 'ca-pub-XXXXXXXXXXXXXXXX'
+    adSensePublisherId: 'ca-pub-9992489128978003'
   },
   reports: []
 };
