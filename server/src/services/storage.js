@@ -157,7 +157,7 @@ export const saveDB = (data) => {
  */
 async function persistToMongo(data) {
   try {
-    // 1. Bulk Upsert Wallpapers
+    // 1. Bulk Upsert Wallpapers or Clear All if Empty
     if (data.wallpapers && data.wallpapers.length > 0) {
       const wallpaperOps = data.wallpapers.map((w) => ({
         updateOne: {
@@ -171,6 +171,9 @@ async function persistToMongo(data) {
       // Clean up deleted wallpapers in MongoDB
       const currentIds = data.wallpapers.map((w) => w.id);
       await WallpaperModel.deleteMany({ id: { $nin: currentIds } });
+    } else {
+      // If db.wallpapers is empty, ensure MongoDB wallpapers collection is also cleared
+      await WallpaperModel.deleteMany({});
     }
 
     // 2. Bulk Upsert Categories

@@ -195,7 +195,11 @@ export const deleteWallpaper = async (req, res) => {
     const prevLen = db.wallpapers.length;
     db.wallpapers = db.wallpapers.filter(w => w.id !== id && w.slug !== id);
 
-    if (db.wallpapers.length === prevLen) {
+    if (isMongoConnected) {
+      await WallpaperModel.deleteOne({ $or: [{ id }, { slug: id }] });
+    }
+
+    if (db.wallpapers.length === prevLen && !isMongoConnected) {
       return res.status(404).json({ success: false, message: 'Wallpaper not found' });
     }
 

@@ -23,8 +23,6 @@ server/uploads/categories/*
 !server/uploads/wallpapers/.gitkeep
 !server/uploads/thumbnails/.gitkeep
 !server/uploads/categories/.gitkeep
-wallpaper collect/input/*
-!wallpaper collect/input/README.txt
 
 # Local database cache / backup
 server/data/*.tmp

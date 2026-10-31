@@ -3,7 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { getDB, saveDB, WallpaperModel } from '../services/storage.js';
 import { isMongoConnected } from '../config/db.js';
-import { fetchLiveWallpapersOnDemand } from '../services/liveSearchFetcher.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,27 +32,10 @@ export const getWallpapers = async (req, res) => {
       results = [...(db.wallpapers || [])].filter(w => w.status === 'published');
     }
 
-    // 1. Search query with On-Demand Live Sourcing
+    // 1. Search query filtering
     if (search && search.trim()) {
       const q = search.trim().toLowerCase();
       
-      let matched = results.filter(w => {
-        const titleMatch = w.title?.toLowerCase().includes(q);
-        const descMatch = w.description?.toLowerCase().includes(q);
-        const catMatch = w.categoryName?.toLowerCase().includes(q);
-        const tagMatch = w.tags?.some(t => t.toLowerCase().includes(q));
-        return titleMatch || descMatch || catMatch || tagMatch;
-      });
-
-      // If local database has fewer than 6 wallpapers for this search query, fetch live on-demand!
-      if (matched.length < 6) {
-        const newlyFetched = await fetchLiveWallpapersOnDemand(q);
-        if (newlyFetched && newlyFetched.length > 0) {
-          db = getDB();
-          results = [...(db.wallpapers || [])].filter(w => w.status === 'published');
-        }
-      }
-
       results = results.filter(w => {
         const titleMatch = w.title?.toLowerCase().includes(q);
         const descMatch = w.description?.toLowerCase().includes(q);
