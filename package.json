@@ -2,6 +2,7 @@
   "name": "aevion-wallpaper-platform",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Aevion - Ultra HD & 4K Wallpaper Download Platform with Google AdSense Optimization",
   "scripts": {
     "start": "node server/src/server.js",
@@ -10,6 +11,13 @@
     "build": "npm run build --prefix client",
     "seed": "node server/src/seed.js",
     "import-wallpapers": "node server/src/autoFetchWallpapers.js",
-    "sync-cloudinary": "node server/src/syncExistingToCloudinary.js"
+    "sync-cloudinary": "node server/src/syncExistingToCloudinary.js",
+    "collect": "node \"wallpaper collect/collect.js\""
+  },
+  "dependencies": {
+    "cloudinary": "^2.11.0",
+    "dotenv": "^18.0.9",
+    "mongoose": "^9.11.4",
+    "sharp": "^0.35.5"
   }
 }
