@@ -116,11 +116,10 @@ export const WallpaperModal = ({ wallpaper, onClose, onSelectRelated }) => {
               <div className="flex items-center rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow-md overflow-hidden transition-all">
                 <button
                   onClick={() => handleDownload('original')}
-                  disabled={downloading}
                   className="px-4 py-2.5 flex items-center gap-1.5 border-r border-emerald-700/50"
                 >
-                  <Download className={`w-4 h-4 ${downloading ? 'animate-bounce' : ''}`} />
-                  <span>{downloading ? 'Preparing...' : 'Download free'}</span>
+                  <Download className="w-4 h-4" />
+                  <span>Download free</span>
                 </button>
                 <button
                   onClick={() => setShowResMenu(!showResMenu)}
