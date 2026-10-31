@@ -28,6 +28,38 @@ export const seedDatabase = () => {
       wallpaperCount: 0
     },
     {
+      id: 'cat_animals',
+      name: 'Animals & Wildlife',
+      slug: 'animals',
+      description: 'Majestic creatures, exotic birds, intricate macro insects, and wildlife photography in stunning 4K.',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=600&q=80',
+      wallpaperCount: 0
+    },
+    {
+      id: 'cat_ocean',
+      name: 'Ocean & Beaches',
+      slug: 'ocean',
+      description: 'Turquoise ocean waves, dramatic rocky coastlines, tropical shores, and coastal landscapes in 4K.',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+      wallpaperCount: 0
+    },
+    {
+      id: 'cat_architecture',
+      name: 'Architecture',
+      slug: 'architecture',
+      description: 'Timeless European cityscapes, historic buildings, elegant corridors, and architectural masterworks.',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
+      wallpaperCount: 0
+    },
+    {
+      id: 'cat_city',
+      name: 'City & Urban',
+      slug: 'city',
+      description: 'Dynamic metropolitan skylines, modern architecture, panoramic city vistas, and urban landscapes.',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=600&q=80',
+      wallpaperCount: 0
+    },
+    {
       id: 'cat_cyberpunk',
       name: 'Cyberpunk & Sci-Fi',
       slug: 'cyberpunk',

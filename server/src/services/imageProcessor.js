@@ -162,8 +162,17 @@ export const processWallpaperImage = async (fileBuffer, originalFilename) => {
     try {
       console.log(`[Storage] Uploading to Cloudinary CDN (${baseName})...`);
 
+      // Ensure original image buffer does not exceed Cloudinary account 10MB file limit
+      let uploadOriginalBuffer = fileBuffer;
+      if (fileBuffer.length > 9 * 1024 * 1024) {
+        uploadOriginalBuffer = await sharp(fileBuffer)
+          .resize({ width: Math.min(width, 3840), withoutEnlargement: true })
+          .jpeg({ quality: 90, mozjpeg: true })
+          .toBuffer();
+      }
+
       const [originalResult, previewResult, thumbResult] = await Promise.all([
-        uploadBufferToCloudinary(fileBuffer, {
+        uploadBufferToCloudinary(uploadOriginalBuffer, {
           folder: 'aevion_wallpapers/original',
           public_id: `${baseName}-original`
         }),

@@ -327,6 +327,33 @@ export const WallpaperDetailPage = () => {
                 ))}
               </div>
             </div>
+
+            {/* License & Copyright Attribution */}
+            {wallpaper.attribution && (
+              <div className="pt-4 border-t border-slate-100 dark:border-white/5 space-y-2">
+                <span className="text-xs font-semibold text-slate-500 block">Attribution & License:</span>
+                <div className="text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-dark-surface p-3 rounded-2xl border border-slate-200/60 dark:border-dark-border space-y-1.5">
+                  <div className="flex items-start gap-2">
+                    <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 shrink-0">
+                      CC
+                    </span>
+                    <span className="leading-snug">{wallpaper.attribution}</span>
+                  </div>
+                  {wallpaper.sourceUrl && (
+                    <div className="pt-1">
+                      <a
+                        href={wallpaper.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        View Original Wikimedia Source ↗
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* AdSense Placement: Detail Page Rectangle Banner */}

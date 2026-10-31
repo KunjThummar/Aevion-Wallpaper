@@ -82,7 +82,10 @@ export const uploadWallpaper = async (req, res) => {
       categorySlug,
       tags = '',
       deviceTarget = 'universal',
-      isFeatured = false
+      isFeatured = false,
+      attribution = '',
+      sourceUrl = '',
+      license = ''
     } = req.body;
 
     const db = getDB();
@@ -125,6 +128,9 @@ export const uploadWallpaper = async (req, res) => {
       aspectRatio: processed.aspectRatio,
       orientation: processed.orientation,
       deviceTarget: deviceTarget || 'universal',
+      attribution: attribution || '',
+      sourceUrl: sourceUrl || '',
+      license: license || '',
       fileFormat: processed.format,
       fileSizeBytes: processed.fileSizeBytes,
       pHash: processed.pHash,

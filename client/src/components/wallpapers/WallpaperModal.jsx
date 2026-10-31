@@ -215,9 +215,9 @@ export const WallpaperModal = ({ wallpaper, onClose, onSelectRelated }) => {
               </span>
             </div>
             <div>
-              <span className="text-slate-400 block font-medium">License</span>
-              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5 block">
-                Free for commercial use
+              <span className="text-slate-400 block font-medium">License & Attribution</span>
+              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5 block truncate" title={wallpaper.attribution || 'Creative Commons CC'}>
+                {wallpaper.attribution || 'Free for commercial use'}
               </span>
             </div>
           </div>

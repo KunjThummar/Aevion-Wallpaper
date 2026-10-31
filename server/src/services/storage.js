@@ -68,6 +68,9 @@ const WallpaperSchema = new mongoose.Schema({
   fileFormat: String,
   fileSizeBytes: Number,
   pHash: String,
+  attribution: String,
+  sourceUrl: String,
+  license: String,
   images: {
     originalUrl: String,
     previewUrl: String,

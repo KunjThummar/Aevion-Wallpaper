@@ -23,6 +23,8 @@ server/uploads/categories/*
 !server/uploads/wallpapers/.gitkeep
 !server/uploads/thumbnails/.gitkeep
 !server/uploads/categories/.gitkeep
+input/*
+!input/.gitkeep
 
 # Local database cache / backup
 server/data/*.tmp

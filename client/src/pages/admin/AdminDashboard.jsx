@@ -42,6 +42,8 @@ export const AdminDashboard = () => {
   const [categorySlug, setCategorySlug] = useState('abstract');
   const [tags, setTags] = useState('');
   const [deviceTarget, setDeviceTarget] = useState('universal');
+  const [attribution, setAttribution] = useState('');
+  const [sourceUrl, setSourceUrl] = useState('');
   const [isFeatured, setIsFeatured] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState('');
@@ -137,6 +139,8 @@ export const AdminDashboard = () => {
       formData.append('categorySlug', categorySlug);
       formData.append('tags', tags);
       formData.append('deviceTarget', deviceTarget);
+      formData.append('attribution', attribution);
+      formData.append('sourceUrl', sourceUrl);
       formData.append('isFeatured', isFeatured);
 
       const res = await axios.post('/api/admin/wallpapers', formData, {
@@ -155,6 +159,8 @@ export const AdminDashboard = () => {
         setTitle('');
         setDescription('');
         setTags('');
+        setAttribution('');
+        setSourceUrl('');
       }
     } catch (err) {
       setUploadError(err.response?.data?.message || 'Upload failed');
@@ -431,6 +437,30 @@ export const AdminDashboard = () => {
                     <option value="mobile">Mobile Phone (9:16)</option>
                     <option value="tablet">Tablet / iPad</option>
                   </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="font-semibold block mb-1">Attribution / Creator Credit</label>
+                  <input
+                    type="text"
+                    value={attribution}
+                    onChange={(e) => setAttribution(e.target.value)}
+                    placeholder="e.g. By Jose María Ligero Loarte — CC BY-SA 4.0"
+                    className="w-full p-3 rounded-xl bg-slate-100 dark:bg-dark-surface border border-slate-300 dark:border-dark-border"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold block mb-1">Source URL</label>
+                  <input
+                    type="url"
+                    value={sourceUrl}
+                    onChange={(e) => setSourceUrl(e.target.value)}
+                    placeholder="https://commons.wikimedia.org/..."
+                    className="w-full p-3 rounded-xl bg-slate-100 dark:bg-dark-surface border border-slate-300 dark:border-dark-border"
+                  />
                 </div>
               </div>
 
