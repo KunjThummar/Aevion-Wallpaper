@@ -25,6 +25,7 @@ server/uploads/categories/*
 !server/uploads/categories/.gitkeep
 input/*
 !input/.gitkeep
+docs/
 
 # Local database cache / backup
 server/data/*.tmp

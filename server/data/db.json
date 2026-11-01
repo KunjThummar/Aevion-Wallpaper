@@ -1,6 +1,342 @@
 {
   "wallpapers": [
     {
+      "id": "wall_1793547641542_10tuq",
+      "title": "Alpine Ibex on Montasio Mountain Peak 4K",
+      "slug": "alpine-ibex-on-montasio-mountain-peak-4k-lmx6",
+      "description": "Experience the breathtaking wilderness of the Julian Alps with this majestic young Alpine ibex wallpaper. Perched high upon the rugged rocky peak of Montasio (Cima di Terrarossa) in Italy, this wildlife photograph captures the grace, power, and serene mountain environment of high-altitude capra ibex in crystal-clear 4K resolution.",
+      "categorySlug": "animals",
+      "categoryName": "Animals & Wildlife",
+      "tags": [
+        "alpine ibex",
+        "capra ibex",
+        "wildlife",
+        "italian alps",
+        "julian alps",
+        "montasio",
+        "mountain wildlife",
+        "nature photography",
+        "rocky mountain",
+        "4k wallpaper"
+      ],
+      "attribution": "By Scosse — CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=195062354",
+      "license": "CC BY-SA 4.0",
+      "deviceTarget": "universal",
+      "dominantColor": "#98a8b8",
+      "palette": [
+        "#98a8b8",
+        "#10141f",
+        "#ffffff"
+      ],
+      "originalWidth": 2000,
+      "originalHeight": 3000,
+      "aspectRatio": "2:3",
+      "orientation": "portrait",
+      "fileFormat": "jpeg",
+      "fileSizeBytes": 6035279,
+      "pHash": "1111111100111110010101110000011011000111000000110000011100100001",
+      "images": {
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547641/aevion_wallpapers/original/1793547610825-x2j8eh-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547618/aevion_wallpapers/previews/1793547610825-x2j8eh-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547615/aevion_wallpapers/thumbnails/1793547610825-x2j8eh-thumb.webp"
+      },
+      "viewsCount": 0,
+      "downloadsCount": 0,
+      "favoritesCount": 0,
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-11-01T15:40:41.543Z"
+    },
+    {
+      "id": "wall_1793547662166_ek12q",
+      "title": "Saint Martin Provost Church Gurnitz Austria 4K",
+      "slug": "saint-martin-provost-church-gurnitz-austria-4k-oztl",
+      "description": "Discover the historic architectural splendor of Carinthia, Austria, with this collegiate church Saint Martin and provost house wallpaper in Gurnitz, Ebenthal. Featuring classical European church architecture, ornate copper roofs, and surrounding lush alpine greenery, this stunning 4K wallpaper brings timeless cultural elegance to desktop and mobile screens.",
+      "categorySlug": "architecture",
+      "categoryName": "Architecture",
+      "tags": [
+        "gurnitz church",
+        "ebenthal",
+        "carinthia",
+        "austria",
+        "church architecture",
+        "provost house",
+        "european architecture",
+        "historic building",
+        "travel wallpaper",
+        "4k wallpaper"
+      ],
+      "attribution": "By Johann Jaritz — CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=93340523",
+      "license": "CC BY-SA 4.0",
+      "deviceTarget": "universal",
+      "dominantColor": "#183858",
+      "palette": [
+        "#183858",
+        "#10141f",
+        "#ffffff"
+      ],
+      "originalWidth": 4928,
+      "originalHeight": 3280,
+      "aspectRatio": "308:205",
+      "orientation": "landscape",
+      "fileFormat": "jpeg",
+      "fileSizeBytes": 15796417,
+      "pHash": "1000010000000000100001000000011101101101011111001100000011011101",
+      "images": {
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547662/aevion_wallpapers/original/1793547642794-dteagg-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547655/aevion_wallpapers/previews/1793547642794-dteagg-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547653/aevion_wallpapers/thumbnails/1793547642794-dteagg-thumb.webp"
+      },
+      "viewsCount": 0,
+      "downloadsCount": 0,
+      "favoritesCount": 0,
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-11-01T15:41:02.167Z"
+    },
+    {
+      "id": "wall_1793547679885_w1y90",
+      "title": "Shaumyana Avenue Saint Petersburg Cityscape 4K",
+      "slug": "shaumyana-avenue-saint-petersburg-cityscape-4k-c8jf",
+      "description": "Immerse your display in the expansive urban scenery of Saint Petersburg with this high-resolution Shaumyana Avenue cityscape wallpaper. Showcasing wide metropolitan streets, modern architecture, and scenic northern city skies, this wallpaper offers an inspiring urban perspective for desktop monitors and phones.",
+      "categorySlug": "city",
+      "categoryName": "City & Urban",
+      "tags": [
+        "saint petersburg",
+        "shaumyana avenue",
+        "russia",
+        "cityscape",
+        "urban photography",
+        "city street",
+        "metropolitan",
+        "travel wallpaper",
+        "architecture",
+        "4k wallpaper"
+      ],
+      "attribution": "By Alex 'Florstein' Fedorov — CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=43235152",
+      "license": "CC BY-SA 4.0",
+      "deviceTarget": "universal",
+      "dominantColor": "#181808",
+      "palette": [
+        "#181808",
+        "#10141f",
+        "#ffffff"
+      ],
+      "originalWidth": 3700,
+      "originalHeight": 2451,
+      "aspectRatio": "3700:2451",
+      "orientation": "landscape",
+      "fileFormat": "jpeg",
+      "fileSizeBytes": 9861794,
+      "pHash": "1111111011111110111111001001100000001000000000100001100000111000",
+      "images": {
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547680/aevion_wallpapers/original/1793547662937-zloaw7-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547675/aevion_wallpapers/previews/1793547662937-zloaw7-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547671/aevion_wallpapers/thumbnails/1793547662937-zloaw7-thumb.webp"
+      },
+      "viewsCount": 0,
+      "downloadsCount": 0,
+      "favoritesCount": 0,
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-11-01T15:41:19.885Z"
+    },
+    {
+      "id": "wall_1793547703472_3hpoo",
+      "title": "Djerba Island Fishing Boat Coastal Sunset 4K",
+      "slug": "djerba-island-fishing-boat-coastal-sunset-4k-hz7o",
+      "description": "Celebrate the peaceful coastal allure of the Mediterranean with this traditional fishing boat wallpaper on the shores of Djerba, Tunisia. The gentle sea waters, rustic wooden boat textures, and tranquil coastal horizon create a soothing maritime atmosphere perfect for relaxing digital backgrounds.",
+      "categorySlug": "ocean",
+      "categoryName": "Ocean & Beaches",
+      "tags": [
+        "djerba",
+        "tunisia",
+        "fishing boat",
+        "mediterranean coast",
+        "beach",
+        "ocean waves",
+        "coastal landscape",
+        "travel photography",
+        "sea",
+        "4k wallpaper"
+      ],
+      "attribution": "By Skander zarrad — CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=194328990",
+      "license": "CC BY-SA 4.0",
+      "deviceTarget": "universal",
+      "dominantColor": "#b8b8c8",
+      "palette": [
+        "#b8b8c8",
+        "#10141f",
+        "#ffffff"
+      ],
+      "originalWidth": 9094,
+      "originalHeight": 6063,
+      "aspectRatio": "9094:6063",
+      "orientation": "landscape",
+      "fileFormat": "jpeg",
+      "fileSizeBytes": 25332532,
+      "pHash": "1111100011111111111111111111111100000000000000001111100100010000",
+      "images": {
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547703/aevion_wallpapers/original/1793547682897-x4876r-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547696/aevion_wallpapers/previews/1793547682897-x4876r-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547693/aevion_wallpapers/thumbnails/1793547682897-x4876r-thumb.webp"
+      },
+      "viewsCount": 0,
+      "downloadsCount": 0,
+      "favoritesCount": 0,
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-11-01T15:41:43.472Z"
+    },
+    {
+      "id": "wall_1793547719002_midy5",
+      "title": "Lake Neusiedl Sunset in Rust Austria 4K",
+      "slug": "lake-neusiedl-sunset-in-rust-austria-4k-1oou",
+      "description": "Experience the enchanting golden hour over Lake Neusiedl in Rust, Burgenland, Austria. Radiant sunset colors reflecting across the tranquil waters and expansive dramatic sky create a serene and awe-inspiring natural landscape for Ultra HD displays and laptops.",
+      "categorySlug": "nature",
+      "categoryName": "Nature & Landscapes",
+      "tags": [
+        "lake neusiedl",
+        "neusiedler see",
+        "rust austria",
+        "sunset landscape",
+        "golden hour",
+        "tranquil lake",
+        "burgenland",
+        "nature wallpaper",
+        "calm waters",
+        "4k wallpaper"
+      ],
+      "attribution": "By Jakub Hałun — CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=119199187",
+      "license": "CC BY-SA 4.0",
+      "deviceTarget": "universal",
+      "dominantColor": "#282838",
+      "palette": [
+        "#282838",
+        "#10141f",
+        "#ffffff"
+      ],
+      "originalWidth": 4561,
+      "originalHeight": 3045,
+      "aspectRatio": "4561:3045",
+      "orientation": "landscape",
+      "fileFormat": "jpeg",
+      "fileSizeBytes": 13847829,
+      "pHash": "0000000000011100011111101111111111111110000000000001100000011000",
+      "images": {
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547719/aevion_wallpapers/original/1793547706086-b1w48q-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547716/aevion_wallpapers/previews/1793547706086-b1w48q-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547715/aevion_wallpapers/thumbnails/1793547706086-b1w48q-thumb.webp"
+      },
+      "viewsCount": 0,
+      "downloadsCount": 0,
+      "favoritesCount": 0,
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-11-01T15:41:59.002Z"
+    },
+    {
+      "id": "wall_1793547738950_lkb88",
+      "title": "Columbian Black-Tailed Deer Mount Rainier 4K",
+      "slug": "columbian-black-tailed-deer-mount-rainier-4k-35n6",
+      "description": "Encounter the majestic wilderness of the Pacific Northwest with this male Columbian black-tailed deer wallpaper captured along the Myrtle Falls Trail in Mount Rainier National Park, Washington. Featuring impressive antlers in velvet and vibrant subalpine wildflowers, this wildlife photograph brings nature's grandeur to your screen.",
+      "categorySlug": "animals",
+      "categoryName": "Animals & Wildlife",
+      "tags": [
+        "columbian black tailed deer",
+        "deer",
+        "mount rainier",
+        "wildlife",
+        "myrtle falls",
+        "national park",
+        "antlers in velvet",
+        "nature photography",
+        "washington",
+        "4k wallpaper"
+      ],
+      "attribution": "By Charles J. Sharp — CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=197024026",
+      "license": "CC BY-SA 4.0",
+      "deviceTarget": "universal",
+      "dominantColor": "#283828",
+      "palette": [
+        "#283828",
+        "#10141f",
+        "#ffffff"
+      ],
+      "originalWidth": 6960,
+      "originalHeight": 4640,
+      "aspectRatio": "3:2",
+      "orientation": "landscape",
+      "fileFormat": "jpeg",
+      "fileSizeBytes": 20126967,
+      "pHash": "0101100000000000000000000000100111001101111111111111110111111111",
+      "images": {
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547738/aevion_wallpapers/original/1793547720722-wvomvk-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547733/aevion_wallpapers/previews/1793547720722-wvomvk-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547731/aevion_wallpapers/thumbnails/1793547720722-wvomvk-thumb.webp"
+      },
+      "viewsCount": 0,
+      "downloadsCount": 0,
+      "favoritesCount": 0,
+      "isFeatured": false,
+      "status": "published",
+      "createdAt": "2026-11-01T15:42:18.950Z"
+    },
+    {
+      "id": "wall_1793547764553_5tejq",
+      "title": "Classic Vintage Chevrolet on Havana Malecón 4K",
+      "slug": "classic-vintage-chevrolet-on-havana-malec-n-4k-760p",
+      "description": "Capture the vibrant spirit and retro elegance of Havana, Cuba, with this iconic wallpaper featuring a classic vintage blue Chevrolet cruising along the famous seaside Malecón avenue. The blend of historic oceanfront architecture, ocean waves, and timeless mid-century automotive styling makes this high-resolution 4K wallpaper a masterpiece for vehicle and travel enthusiasts.",
+      "categorySlug": "cars",
+      "categoryName": "Supercars & Vehicles",
+      "tags": [
+        "havana",
+        "cuba",
+        "malecon avenue",
+        "vintage car",
+        "classic chevrolet",
+        "classic cars",
+        "car wallpaper",
+        "oceanfront",
+        "cityscape",
+        "4k wallpaper"
+      ],
+      "attribution": "By Ezarate (retouched by The Photographer) — CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=55652089",
+      "license": "CC BY-SA 4.0",
+      "deviceTarget": "universal",
+      "dominantColor": "#98a8b8",
+      "palette": [
+        "#98a8b8",
+        "#10141f",
+        "#ffffff"
+      ],
+      "originalWidth": 4719,
+      "originalHeight": 3066,
+      "aspectRatio": "1573:1022",
+      "orientation": "landscape",
+      "fileFormat": "jpeg",
+      "fileSizeBytes": 7090829,
+      "pHash": "0111011111111111100111110111111111111111110001101000011000000000",
+      "images": {
+        "originalUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547764/aevion_wallpapers/original/1793547739679-7ua2k6-original.jpg",
+        "previewUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547747/aevion_wallpapers/previews/1793547739679-7ua2k6-preview.webp",
+        "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547744/aevion_wallpapers/thumbnails/1793547739679-7ua2k6-thumb.webp"
+      },
+      "viewsCount": 0,
+      "downloadsCount": 0,
+      "favoritesCount": 0,
+      "isFeatured": true,
+      "status": "published",
+      "createdAt": "2026-11-01T15:42:44.553Z"
+    },
+    {
       "id": "wall_1793443979782_rujl5",
       "title": "Córdoba Historic City Center 4K",
       "slug": "c-rdoba-historic-city-center-4k-6fai",
@@ -927,8 +1263,8 @@
       "name": "Nature & Landscapes",
       "slug": "nature",
       "description": "Breathtaking mountains, lush forests, tranquil lakes, and mesmerizing sunsets in 4K.",
-      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793444152/aevion_wallpapers/previews/1793444134395-00pbu7-preview.webp",
-      "wallpaperCount": 4
+      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547716/aevion_wallpapers/previews/1793547706086-b1w48q-preview.webp",
+      "wallpaperCount": 5
     },
     {
       "id": "cat_cyberpunk",
@@ -959,8 +1295,8 @@
       "name": "Supercars & Vehicles",
       "slug": "cars",
       "description": "Exotic hypercars, modified track weapons, and vintage classic automobiles in 8K.",
-      "thumbnailUrl": "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=600&q=80",
-      "wallpaperCount": 0
+      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547747/aevion_wallpapers/previews/1793547739679-7ua2k6-preview.webp",
+      "wallpaperCount": 1
     },
     {
       "id": "cat_space",
@@ -983,32 +1319,32 @@
       "name": "Animals & Wildlife",
       "slug": "animals",
       "description": "Majestic creatures, exotic birds, intricate macro insects, and wildlife photography in stunning 4K.",
-      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793443995/aevion_wallpapers/previews/1793443981246-044u86-preview.webp",
-      "wallpaperCount": 9
+      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547618/aevion_wallpapers/previews/1793547610825-x2j8eh-preview.webp",
+      "wallpaperCount": 11
     },
     {
       "id": "cat_ocean",
       "name": "Ocean & Beaches",
       "slug": "ocean",
       "description": "Turquoise ocean waves, dramatic rocky coastlines, tropical shores, and coastal landscapes in 4K.",
-      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793444164/aevion_wallpapers/previews/1793444153362-z6rmd2-preview.webp",
-      "wallpaperCount": 3
+      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547696/aevion_wallpapers/previews/1793547682897-x4876r-preview.webp",
+      "wallpaperCount": 4
     },
     {
       "id": "cat_architecture",
       "name": "Architecture",
       "slug": "architecture",
       "description": "Timeless European cityscapes, historic buildings, elegant corridors, and architectural masterworks.",
-      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793443972/aevion_wallpapers/previews/1793443962813-hk03ay-preview.webp",
-      "wallpaperCount": 2
+      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547655/aevion_wallpapers/previews/1793547642794-dteagg-preview.webp",
+      "wallpaperCount": 3
     },
     {
       "id": "cat_city",
       "name": "City & Urban",
       "slug": "city",
       "description": "Dynamic metropolitan skylines, modern architecture, panoramic city vistas, and urban landscapes.",
-      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793444212/aevion_wallpapers/previews/1793444204342-0qrn53-preview.webp",
-      "wallpaperCount": 1
+      "thumbnailUrl": "https://res.cloudinary.com/aevionwallpaper/image/upload/v1793547675/aevion_wallpapers/previews/1793547662937-zloaw7-preview.webp",
+      "wallpaperCount": 2
     }
   ],
   "tags": [],
