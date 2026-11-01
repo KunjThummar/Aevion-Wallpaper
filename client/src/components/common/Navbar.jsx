@@ -116,12 +116,13 @@ export const Navbar = ({ onOpenSubmitModal }) => {
 
         {/* Unsplash Signature Search Bar */}
         <div ref={suggestRef} className="flex-1 max-w-4xl relative">
-          <form onSubmit={handleSearchSubmit} className="relative w-full">
+          <form onSubmit={handleSearchSubmit} role="search" className="relative w-full">
             <button
               type="submit"
+              aria-label="Search wallpapers"
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
             >
-              <Search className="w-4 h-4" />
+              <Search className="w-4 h-4" aria-hidden="true" />
             </button>
             <input
               type="text"
@@ -129,6 +130,7 @@ export const Navbar = ({ onOpenSubmitModal }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => suggestions.length > 0 && setIsSuggestOpen(true)}
               placeholder="Search high-resolution photos and wallpapers"
+              aria-label="Search high-resolution photos and wallpapers"
               className="w-full pl-11 pr-10 py-2.5 rounded-full text-sm bg-slate-100 dark:bg-dark-surface hover:bg-slate-200/70 dark:hover:bg-dark-card border border-transparent focus:border-slate-300 dark:focus:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none transition-all"
             />
             {searchQuery && (
@@ -138,9 +140,10 @@ export const Navbar = ({ onOpenSubmitModal }) => {
                   setSearchQuery('');
                   setSuggestions([]);
                 }}
+                aria-label="Clear search input"
                 className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
           </form>
@@ -187,8 +190,9 @@ export const Navbar = ({ onOpenSubmitModal }) => {
             to="/favorites"
             className="relative p-2 text-slate-600 hover:text-rose-500 dark:text-slate-300 dark:hover:text-rose-400 transition-colors"
             title="Saved Favorites"
+            aria-label="View saved favorites"
           >
-            <Heart className="w-5 h-5" />
+            <Heart className="w-5 h-5" aria-hidden="true" />
             {favorites.length > 0 && (
               <span className="absolute top-1 right-1 flex items-center justify-center min-w-[16px] h-[16px] px-1 text-[10px] font-bold text-white bg-rose-500 rounded-full">
                 {favorites.length}
@@ -201,8 +205,9 @@ export const Navbar = ({ onOpenSubmitModal }) => {
             onClick={toggleTheme}
             className="p-2 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
             title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
-            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            {theme === 'dark' ? <Sun className="w-5 h-5" aria-hidden="true" /> : <Moon className="w-5 h-5" aria-hidden="true" />}
           </button>
         </div>
       </div>
@@ -213,9 +218,10 @@ export const Navbar = ({ onOpenSubmitModal }) => {
         {showLeftArrow && (
           <button
             onClick={() => scroll('left')}
+            aria-label="Scroll categories left"
             className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white dark:bg-dark-surface shadow-md border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4" aria-hidden="true" />
           </button>
         )}
 
@@ -254,9 +260,10 @@ export const Navbar = ({ onOpenSubmitModal }) => {
         {showRightArrow && (
           <button
             onClick={() => scroll('right')}
+            aria-label="Scroll categories right"
             className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white dark:bg-dark-surface shadow-md border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" aria-hidden="true" />
           </button>
         )}
       </div>

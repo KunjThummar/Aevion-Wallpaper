@@ -65,15 +65,27 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Serve frontend static build if available
+// Serve frontend static build if available with optimized caching
 const clientDistPath = path.resolve(__dirname, '../../client/dist');
 if (fs.existsSync(clientDistPath)) {
-  app.use(express.static(clientDistPath));
+  app.use(express.static(clientDistPath, {
+    maxAge: '1y',
+    immutable: true,
+    setHeaders: (res, filePath) => {
+      // Never cache HTML so users always get fresh releases immediately
+      if (filePath.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+      }
+    }
+  }));
   app.get('*', (req, res) => {
     // Avoid intercepting API / upload requests
     if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
       return res.status(404).json({ error: 'Endpoint not found' });
     }
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.sendFile(path.join(clientDistPath, 'index.html'));
   });
 }

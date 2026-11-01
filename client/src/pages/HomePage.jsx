@@ -63,12 +63,24 @@ export const HomePage = () => {
       {/* Unsplash Iconic Hero Section (Only shown on homepage root) */}
       {isBrowsingAll && (
         <section className="relative w-full h-[540px] sm:h-[580px] bg-slate-900 overflow-hidden flex items-center justify-center text-white">
-          {/* Background Photo with Dark Vignette */}
-          <img
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=3840&q=90"
-            alt="Hero Background"
-            className="absolute inset-0 w-full h-full object-cover object-center filter brightness-75 scale-105"
-          />
+          {/* Background Photo with Dark Vignette (Responsive optimized WebP/AVIF sizing) */}
+          <picture className="absolute inset-0 w-full h-full">
+            <source
+              media="(max-width: 640px)"
+              srcSet="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=720&q=75"
+            />
+            <source
+              media="(max-width: 1024px)"
+              srcSet="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1280&q=80"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80"
+              alt="Aevion Wallpaper Gallery Hero"
+              fetchPriority="high"
+              decoding="async"
+              className="w-full h-full object-cover object-center filter brightness-75 scale-105"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
 
           {/* Hero Content */}
@@ -82,13 +94,14 @@ export const HomePage = () => {
 
             {/* Expansive Hero Search Bar */}
             <div className="pt-2 max-w-2xl">
-              <form onSubmit={handleHeroSearch} className="relative flex items-center shadow-2xl">
-                <Search className="absolute left-4 w-5 h-5 text-slate-400" />
+              <form onSubmit={handleHeroSearch} role="search" aria-label="Hero search" className="relative flex items-center shadow-2xl">
+                <Search className="absolute left-4 w-5 h-5 text-slate-400" aria-hidden="true" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search high-resolution photos and wallpapers"
+                  aria-label="Search high-resolution photos and wallpapers"
                   className="w-full pl-12 pr-4 py-4 rounded-lg bg-white text-slate-900 placeholder-slate-500 font-medium text-sm focus:outline-none focus:ring-4 focus:ring-black/20"
                 />
               </form>

@@ -12,6 +12,8 @@ export const Logo = ({ size = 'md', className = '' }) => {
         <img
           src="/logo.png"
           alt="Aevion Logo"
+          width={isSm ? 24 : isLg ? 40 : 32}
+          height={isSm ? 24 : isLg ? 40 : 32}
           className={`object-contain ${
             isSm ? 'w-6 h-6' : isLg ? 'w-10 h-10' : 'w-8 h-8'
           }`}

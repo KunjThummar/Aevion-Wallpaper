@@ -66,8 +66,9 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
                 : 'bg-white/90 text-slate-700 hover:bg-white hover:text-rose-500'
             }`}
             title={favorited ? 'Unlike' : 'Like'}
+            aria-label={favorited ? `Remove ${wallpaper.title || 'wallpaper'} from favorites` : `Save ${wallpaper.title || 'wallpaper'} to favorites`}
           >
-            <Heart className={`w-4 h-4 ${favorited ? 'fill-current' : ''}`} />
+            <Heart className={`w-4 h-4 ${favorited ? 'fill-current' : ''}`} aria-hidden="true" />
           </button>
         </div>
 
@@ -95,8 +96,9 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
                 onClick={(e) => handleDownload(e, 'original')}
                 className="px-3 py-2 flex items-center gap-1 border-r border-slate-200"
                 title="Download full quality"
+                aria-label={`Download ${wallpaper.title || 'wallpaper'} in full quality`}
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-3.5 h-3.5" aria-hidden="true" />
                 <span className="hidden sm:inline">Download</span>
               </button>
               <button
@@ -107,8 +109,9 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
                 }}
                 className="px-1.5 py-2 hover:bg-slate-200 transition-colors"
                 title="Choose size"
+                aria-label={`Choose download size for ${wallpaper.title || 'wallpaper'}`}
               >
-                <ChevronDown className="w-3.5 h-3.5" />
+                <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
             </div>
 
