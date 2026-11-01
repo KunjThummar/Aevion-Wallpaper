@@ -84,8 +84,24 @@ export const seedDatabase = () => {
       wallpaperCount: 0
     },
     {
+      id: 'cat_city_architecture',
+      name: 'City & Architecture',
+      slug: 'city-architecture',
+      description: 'Iconic suspension bridges, modern glass skyscrapers, and atmospheric urban cobblestone streets in 4K.',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
+      wallpaperCount: 0
+    },
+    {
+      id: 'cat_military',
+      name: 'Military & Aviation',
+      slug: 'military',
+      description: 'Naval warship fleets, military aviation, aircraft carriers, and defense photography in 4K.',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80',
+      wallpaperCount: 0
+    },
+    {
       id: 'cat_cars',
-      name: 'Supercars & Vehicles',
+      name: 'Cars & Vehicles',
       slug: 'cars',
       description: 'Exotic hypercars, modified track weapons, and vintage classic automobiles in 8K.',
       thumbnailUrl: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=600&q=80',
@@ -93,9 +109,9 @@ export const seedDatabase = () => {
     },
     {
       id: 'cat_space',
-      name: 'Space & Cosmos',
+      name: 'Space & Night Sky',
       slug: 'space',
-      description: 'Deep galaxies, nebulae, James Webb telescope imagery, and distant star clusters.',
+      description: 'Deep galaxies, nebulae, star trails, James Webb telescope imagery, and distant star clusters.',
       thumbnailUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80',
       wallpaperCount: 0
     },
