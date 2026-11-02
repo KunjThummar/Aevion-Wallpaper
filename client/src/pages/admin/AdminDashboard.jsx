@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { SEO } from '../../components/common/SEO';
 import {
   Upload,
   Layers,
@@ -221,6 +222,7 @@ export const AdminDashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in space-y-8">
+      <SEO title="Admin Dashboard" noindex={true} path="/Aevion@1277/admin/dashboard" />
       {/* Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-white/10">
         <div>

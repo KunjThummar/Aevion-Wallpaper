@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 import { ThemeProvider } from './context/ThemeContext';
 import { FavoritesProvider } from './context/FavoritesContext';
@@ -8,12 +9,14 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <FavoritesProvider>
-          <App />
-        </FavoritesProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ThemeProvider>
+          <FavoritesProvider>
+            <App />
+          </FavoritesProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   </React.StrictMode>
 );

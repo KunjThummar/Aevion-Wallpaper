@@ -1,10 +1,16 @@
 import React from 'react';
 import { Sparkles, Eye, ShieldCheck, Zap } from 'lucide-react';
 import { Logo } from '../components/common/Logo';
+import { SEO } from '../components/common/SEO';
 
 export const AboutPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fade-in text-slate-700 dark:text-slate-300 space-y-10">
+      <SEO
+        title="About Us"
+        description="Learn more about Aevion Wallpapers - your destination for free, high-resolution 4K, 8K, and AMOLED wallpapers crafted for creators."
+        path="/about"
+      />
       <div className="text-center space-y-4 max-w-2xl mx-auto">
         <Logo size="lg" className="justify-center" />
         <h1 className="text-3xl sm:text-5xl font-extrabold font-display text-slate-900 dark:text-white mt-4">

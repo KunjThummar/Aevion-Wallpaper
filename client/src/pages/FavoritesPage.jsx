@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFavorites } from '../context/FavoritesContext';
 import { WallpaperCard } from '../components/wallpapers/WallpaperCard';
+import { SEO } from '../components/common/SEO';
 import { Heart, Compass, Trash2 } from 'lucide-react';
 
 export const FavoritesPage = () => {
@@ -9,6 +10,11 @@ export const FavoritesPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-fade-in">
+      <SEO
+        title="My Favorites"
+        noindex={true}
+        path="/favorites"
+      />
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/10 text-rose-500 text-xs font-bold uppercase tracking-wider mb-2">

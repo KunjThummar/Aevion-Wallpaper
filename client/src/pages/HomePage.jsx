@@ -5,6 +5,7 @@ import { Search, Compass, RefreshCw, Sparkles, ArrowRight } from 'lucide-react';
 import { WallpaperCard } from '../components/wallpapers/WallpaperCard';
 import { WallpaperModal } from '../components/wallpapers/WallpaperModal';
 import { AdSlot } from '../components/common/AdSlot';
+import { SEO } from '../components/common/SEO';
 
 const TRENDING_TAGS = ['nature', 'wallpapers', 'amoled', '3d renders', 'travel', 'cyberpunk', 'architecture', 'textures'];
 
@@ -58,8 +59,26 @@ export const HomePage = () => {
 
   const isBrowsingAll = !categoryParam && !searchParam;
 
+  const pageTitle = searchParam
+    ? `Wallpapers matching "${searchParam}"`
+    : categoryParam
+    ? `${categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)} Wallpapers`
+    : undefined;
+
+  const pageDescription = searchParam
+    ? `Discover high quality 4K and 8K wallpapers matching "${searchParam}" on Aevion Wallpapers.`
+    : categoryParam
+    ? `Explore stunning free 4K and AMOLED ${categoryParam} wallpapers for mobile and desktop.`
+    : undefined;
+
   return (
     <div className="min-h-screen">
+      <SEO
+        title={pageTitle}
+        description={pageDescription}
+        path="/"
+      />
+
       {/* Unsplash Iconic Hero Section (Only shown on homepage root) */}
       {isBrowsingAll && (
         <section className="relative w-full h-[540px] sm:h-[580px] bg-slate-900 overflow-hidden flex items-center justify-center text-white">

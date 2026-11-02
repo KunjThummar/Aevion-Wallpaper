@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { WallpaperCard } from '../components/wallpapers/WallpaperCard';
 import { AdSlot } from '../components/common/AdSlot';
+import { SEO } from '../components/common/SEO';
 import { ArrowLeft, Sparkles, Compass } from 'lucide-react';
 
 export const CategoryDetailPage = () => {
@@ -44,8 +45,18 @@ export const CategoryDetailPage = () => {
     );
   }
 
+  const categoryTitle = `${category?.name || slug} Wallpapers | Free 4K & AMOLED`;
+  const categoryDesc = category?.description || `Explore and download free high-resolution 4K and AMOLED ${category?.name || slug} wallpapers for phones and computers on Aevion Wallpapers.`;
+  const categoryImage = wallpapers[0]?.images?.previewUrl || wallpapers[0]?.images?.originalUrl;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+      <SEO
+        title={categoryTitle}
+        description={categoryDesc}
+        path={`/category/${slug}`}
+        image={categoryImage}
+      />
       <Link
         to="/categories"
         className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-500 transition-colors mb-6"

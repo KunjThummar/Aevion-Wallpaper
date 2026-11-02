@@ -1,9 +1,15 @@
 import React from 'react';
 import { ShieldCheck, Lock, Eye, FileText } from 'lucide-react';
+import { SEO } from '../components/common/SEO';
 
 export const PrivacyPolicyPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fade-in text-slate-700 dark:text-slate-300 space-y-8">
+      <SEO
+        title="Privacy Policy"
+        description="Aevion Wallpapers Privacy Policy: Read about our data practices, cookie usage, analytics, and commitment to user privacy."
+        path="/privacy-policy"
+      />
       <div className="space-y-3 border-b border-slate-200 dark:border-white/10 pb-6">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">
           <ShieldCheck className="w-4 h-4" />

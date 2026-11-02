@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Grid, Sparkles, Layers, ArrowRight } from 'lucide-react';
+import { SEO } from '../components/common/SEO';
 
 export const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
@@ -25,6 +26,11 @@ export const CategoriesPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-fade-in">
+      <SEO
+        title="Explore Wallpaper Categories"
+        description="Browse all wallpaper categories including AMOLED, Nature, Anime, Cyberpunk, Minimalist, Space, and 3D Renders on Aevion Wallpapers."
+        path="/categories"
+      />
       <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">
           <Layers className="w-3.5 h-3.5" />

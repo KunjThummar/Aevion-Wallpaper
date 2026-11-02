@@ -1,9 +1,15 @@
 import React from 'react';
 import { FileText, Shield } from 'lucide-react';
+import { SEO } from '../components/common/SEO';
 
 export const TermsPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fade-in text-slate-700 dark:text-slate-300 space-y-8">
+      <SEO
+        title="Terms of Service"
+        description="Aevion Wallpapers Terms of Service: Understand our usage license, permitted personal usage, and terms for downloading wallpapers."
+        path="/terms"
+      />
       <div className="space-y-3 border-b border-slate-200 dark:border-white/10 pb-6">
         <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-slate-900 dark:text-white">
           Terms of Service

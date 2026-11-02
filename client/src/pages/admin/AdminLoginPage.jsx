@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { Shield, Lock, User, ArrowRight } from 'lucide-react';
 import { Logo } from '../../components/common/Logo';
+import { SEO } from '../../components/common/SEO';
 
 export const AdminLoginPage = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export const AdminLoginPage = () => {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+      <SEO title="Administrative Access" noindex={true} path="/Aevion@1277/admin/login" />
       <div className="w-full max-w-md rounded-3xl bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border p-8 shadow-2xl space-y-6">
         <div className="text-center space-y-2">
           <Logo size="md" className="justify-center" />

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/admin
+Disallow: /Aevion@1277/admin
+
+Sitemap: https://aevion-wallpaper.onrender.com/sitemap.xml

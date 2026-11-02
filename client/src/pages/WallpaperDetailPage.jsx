@@ -24,6 +24,7 @@ import { useFavorites } from '../context/FavoritesContext';
 import { AdSlot } from '../components/common/AdSlot';
 import { DownloadAdModal } from '../components/common/DownloadAdModal';
 import { WallpaperCard } from '../components/wallpapers/WallpaperCard';
+import { SEO } from '../components/common/SEO';
 import confetti from 'canvas-confetti';
 
 export const WallpaperDetailPage = () => {
@@ -82,6 +83,7 @@ export const WallpaperDetailPage = () => {
   if (!wallpaper) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-24 text-center space-y-4">
+        <SEO title="Wallpaper Not Found" noindex={true} path={`/wallpaper/${slug}`} />
         <h2 className="text-2xl font-bold">Wallpaper Not Found</h2>
         <p className="text-slate-500">The requested wallpaper might have been removed or renamed.</p>
         <Link to="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 text-white font-semibold">
@@ -120,8 +122,19 @@ export const WallpaperDetailPage = () => {
     }
   };
 
+  const seoTitle = `${wallpaper.title} - Free 4K Wallpaper`;
+  const seoDesc = wallpaper.description || `Download ${wallpaper.title} wallpaper in high resolution 4K, 8K, and AMOLED quality for desktop and mobile on Aevion Wallpapers.`;
+  const seoImage = wallpaper.images?.previewUrl || wallpaper.images?.originalUrl;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        path={`/wallpaper/${slug}`}
+        image={seoImage}
+        type="article"
+      />
       {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6">
         <Link to="/" className="hover:text-blue-500 transition-colors">Home</Link>

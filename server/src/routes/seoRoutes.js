@@ -6,7 +6,7 @@ const router = express.Router();
 // GET /sitemap.xml
 router.get('/sitemap.xml', (req, res) => {
   const db = getDB();
-  const baseUrl = process.env.SITE_URL || 'https://aevionwallpapers.com';
+  const baseUrl = process.env.SITE_URL || 'https://aevion-wallpaper.onrender.com';
   const wallpapers = (db.wallpapers || []).filter(w => w.status === 'published');
   const categories = db.categories || [];
 
@@ -83,11 +83,12 @@ router.get('/sitemap.xml', (req, res) => {
 
 // GET /robots.txt
 router.get('/robots.txt', (req, res) => {
-  const baseUrl = process.env.SITE_URL || 'https://aevionwallpapers.com';
+  const baseUrl = process.env.SITE_URL || 'https://aevion-wallpaper.onrender.com';
   const robots = `User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/admin
+Disallow: /Aevion@1277/admin
 
 Sitemap: ${baseUrl}/sitemap.xml
 `;
