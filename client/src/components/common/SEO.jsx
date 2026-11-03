@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SITE_URL = 'https://aevion-wallpaper.onrender.com';
-const DEFAULT_TITLE = 'Aevion Wallpapers | Free 4K, 8K & AMOLED Wallpapers';
+const DEFAULT_TITLE = 'Aevion Wallpaper | Free 4K, 8K & AMOLED Wallpapers';
 const DEFAULT_DESCRIPTION = 'Discover stunning free 4K and 8K wallpapers for mobile and desktop. Explore AMOLED, nature, anime, space, cyberpunk, and minimalist wallpapers on Aevion Wallpapers.';
 const DEFAULT_IMAGE = `${SITE_URL}/logo.png`;
 
@@ -14,7 +14,7 @@ export const SEO = ({
   type = 'website',
   noindex = false
 }) => {
-  const fullTitle = title ? `${title} | Aevion Wallpapers` : DEFAULT_TITLE;
+  const fullTitle = title ? `${title} | Aevion Wallpaper` : DEFAULT_TITLE;
   const canonicalUrl = `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
   const fullImageUrl = image && image.startsWith('http') ? image : `${SITE_URL}${image || '/logo.png'}`;
 
@@ -32,7 +32,7 @@ export const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={fullImageUrl} />
-      <meta property="og:site_name" content="Aevion Wallpapers" />
+      <meta property="og:site_name" content="Aevion Wallpaper" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
