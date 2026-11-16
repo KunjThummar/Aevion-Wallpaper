@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 const SITE_URL = 'https://aevion-wallpaper.onrender.com';
 const DEFAULT_TITLE = 'Aevion Wallpaper | Free 4K, 8K & AMOLED Wallpapers';
-const DEFAULT_DESCRIPTION = 'Discover stunning free 4K and 8K wallpapers for mobile and desktop. Explore AMOLED, nature, anime, space, cyberpunk, and minimalist wallpapers on Aevion Wallpapers.';
+const DEFAULT_DESCRIPTION = 'Discover free 4K, 8K & AMOLED wallpapers for mobile and desktop. Download stunning nature, anime, and minimalist backgrounds on Aevion Wallpapers.';
 const DEFAULT_IMAGE = `${SITE_URL}/logo.png`;
 
 export const SEO = ({

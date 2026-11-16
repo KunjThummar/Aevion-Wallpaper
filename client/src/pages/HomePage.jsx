@@ -175,6 +175,16 @@ export const HomePage = () => {
         </div>
       )}
 
+      {/* Root Homepage Gallery Header */}
+      {isBrowsingAll && (
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 pt-6 pb-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2 font-display">
+            <Sparkles className="w-5 h-5 text-amber-500" aria-hidden="true" />
+            Curated 4K & AMOLED Wallpapers
+          </h2>
+        </div>
+      )}
+
       {/* Main Unsplash-Style 3-Column Masonry Gallery */}
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6">
         {loading ? (

@@ -30,7 +30,51 @@ const PORT = process.env.PORT || 5000;
 // Security & Optimization Middlewares
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
-  contentSecurityPolicy: false // Allow AdSense and CDN images
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://pagead2.googlesyndication.com",
+        "https://partner.googleadservices.com",
+        "https://adservice.google.com",
+        "https://tpc.googlesyndication.com",
+        "https://*.google.com"
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://fonts.googleapis.com"
+      ],
+      fontSrc: [
+        "'self'",
+        "https://fonts.gstatic.com",
+        "data:"
+      ],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "blob:",
+        "https://images.unsplash.com",
+        "https://pagead2.googlesyndication.com",
+        "https://aevion-wallpaper.onrender.com",
+        "https://*.googleusercontent.com"
+      ],
+      connectSrc: [
+        "'self'",
+        "https://images.unsplash.com",
+        "https://pagead2.googlesyndication.com",
+        "https://*.google.com"
+      ],
+      frameSrc: [
+        "'self'",
+        "https://googleads.g.doubleclick.net",
+        "https://pagead2.googlesyndication.com",
+        "https://*.google.com"
+      ]
+    }
+  }
 }));
 app.use(cors());
 app.use(compression());
