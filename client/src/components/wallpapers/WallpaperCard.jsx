@@ -40,10 +40,18 @@ export const WallpaperCard = ({ wallpaper, onOpenModal }) => {
         }}
       >
         <img
-          src={wallpaper.images?.thumbnailUrl || wallpaper.images?.previewUrl}
+          src={wallpaper.images?.thumbnailUrl || wallpaper.images?.previewUrl || wallpaper.images?.originalUrl}
           alt={wallpaper.title}
           loading="lazy"
           onLoad={() => setIsLoaded(true)}
+          onError={(e) => {
+            setIsLoaded(true);
+            if (wallpaper.images?.previewUrl && e.currentTarget.src !== wallpaper.images.previewUrl) {
+              e.currentTarget.src = wallpaper.images.previewUrl;
+            } else if (wallpaper.images?.originalUrl && e.currentTarget.src !== wallpaper.images.originalUrl) {
+              e.currentTarget.src = wallpaper.images.originalUrl;
+            }
+          }}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}

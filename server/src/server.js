@@ -56,16 +56,28 @@ app.use(helmet({
         "'self'",
         "data:",
         "blob:",
+        "https://res.cloudinary.com",
+        "https://*.cloudinary.com",
         "https://images.unsplash.com",
+        "https://commons.wikimedia.org",
+        "https://upload.wikimedia.org",
         "https://pagead2.googlesyndication.com",
         "https://aevion-wallpaper.onrender.com",
         "https://*.googleusercontent.com"
       ],
       connectSrc: [
         "'self'",
+        "https://res.cloudinary.com",
+        "https://*.cloudinary.com",
         "https://images.unsplash.com",
         "https://pagead2.googlesyndication.com",
         "https://*.google.com"
+      ],
+      mediaSrc: [
+        "'self'",
+        "https://res.cloudinary.com",
+        "https://*.cloudinary.com",
+        "blob:"
       ],
       frameSrc: [
         "'self'",

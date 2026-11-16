@@ -24,10 +24,13 @@ export const getWallpapers = async (req, res) => {
       limit = 16
     } = req.query;
 
-    let results;
+    let results = [];
     if (isMongoConnected) {
       results = await WallpaperModel.find({ status: 'published' }).sort({ createdAt: -1 }).lean();
-    } else {
+    }
+    
+    // Fall back to local JSON storage if MongoDB returned empty or is not connected
+    if (!results || results.length === 0) {
       let db = getDB();
       results = [...(db.wallpapers || [])].filter(w => w.status === 'published');
     }

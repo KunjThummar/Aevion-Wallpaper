@@ -222,8 +222,11 @@ export const syncWithMongoDB = async () => {
     const mongoCategories = await CategoryModel.find({}).lean();
     const mongoConfig = await ConfigModel.findOne({ key: 'main_config' }).lean();
 
+    const hasMongoWallpapers = mongoWallpapers && mongoWallpapers.length > 0;
+    const finalWallpapers = hasMongoWallpapers ? mongoWallpapers : (localData.wallpapers || []);
+
     const merged = {
-      wallpapers: mongoWallpapers,
+      wallpapers: finalWallpapers,
       categories: mongoCategories.length > 0 ? mongoCategories : (localData.categories || []),
       tags: mongoConfig?.tags || localData.tags || [],
       ads: mongoConfig?.ads || localData.ads || [],
@@ -233,6 +236,12 @@ export const syncWithMongoDB = async () => {
 
     memoryCache = merged;
     fs.writeFileSync(DB_FILE, JSON.stringify(merged, null, 2), 'utf-8');
+
+    // If MongoDB Atlas was empty but we have local wallpapers, seed them into Atlas
+    if (!hasMongoWallpapers && finalWallpapers.length > 0) {
+      console.log(`[Storage] Seeding ${finalWallpapers.length} wallpapers from local storage into MongoDB Atlas...`);
+      await persistToMongo(merged);
+    }
   } catch (err) {
     console.error('[Storage] Failed to sync with MongoDB:', err.message);
   }
